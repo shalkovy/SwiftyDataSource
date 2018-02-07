@@ -43,7 +43,7 @@ public class FRCDataSourceContainer<ResultType: NSFetchRequestResult>: DataSourc
         }
     }
     
-    open override func object(at indexPath: IndexPath) -> ResultType {
+    open override func object(at indexPath: IndexPath) -> ResultType? {
         return fetchedResultController.object(at: indexPath)
     }
     
