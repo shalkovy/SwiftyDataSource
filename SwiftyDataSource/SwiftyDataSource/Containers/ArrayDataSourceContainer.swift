@@ -16,7 +16,7 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
 
     // MARK: Initializer
     
-    required public init(objects: [ResultType]?, named: String = "", delegate: DataSourceContainerDelegate?) {
+    required public init(objects: [ResultType]? = nil, named: String = "", delegate: DataSourceContainerDelegate? = nil) {
         super.init(delegate: delegate)
         if let objects = objects {
             try! insert(sectionObjects: objects, at: 0, named: named, indexTitle: nil)
@@ -36,12 +36,10 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
     }
     
     open override func object(at indexPath: IndexPath) -> ResultType? {
-//        guard let sections = arraySections else { return super.object(at: indexPath); }
         return arraySections[indexPath.section][indexPath.row]
     }
     
     open override func indexPath(for object: ResultType) -> IndexPath? {
-//        guard let arraySections = arraySections else { return nil }
         for (sectionIndex, section) in arraySections.enumerated() {
             for (objectIndex, arrayObject) in section.arrayObjects.enumerated() {
                 if (object == arrayObject) {
@@ -49,7 +47,6 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
                 }
             }
         }
-        
         return nil
     }
     
