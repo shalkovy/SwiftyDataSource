@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol CollectionViewDataSourceDelegate: class {
+public protocol CollectionViewDataSourceDelegate: class {
     func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: Any, at indexPath: IndexPath) -> String?
 }
 
-extension CollectionViewDataSourceDelegate {
+public extension CollectionViewDataSourceDelegate {
     func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: Any, at indexPath: IndexPath) -> String? {
         return nil
     }
 }
 
-class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollectionViewDataSource, UICollectionViewDelegate {
+open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollectionViewDataSource, UICollectionViewDelegate {
     
     // MARK: Initializer
     
@@ -60,21 +60,21 @@ class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollectionVi
 
     // MARK: Implementing of datasource methods
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let numberOfSections = numberOfSections else {
             return 0
         }
         return numberOfSections
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let numberOfItems = numberOfItems(in: section) else {
             return 0
         }
         return numberOfItems
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let object = object(at: indexPath) else {
             fatalError("Could not retrieve object at \(indexPath)")
         }
