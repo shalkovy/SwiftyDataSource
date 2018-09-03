@@ -47,5 +47,8 @@ extension DataSource {
     public func indexPath(for object: ObjectType) -> IndexPath? {
         return container?.indexPath(for: object)
     }
-    
+
+    public func sectionInfo(at index: Int) -> DataSourceSectionInfo? {
+        return container?.sections?[index]
+    }
 }

@@ -22,7 +22,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
 
     // MARK: Initializer
     
-    public init(container: DataSourceContainer<ObjectType>,
+    public init(container: DataSourceContainer<ObjectType>?,
                 delegate: TableViewDataSourceDelegate?,
                 tableView: UITableView?,
                 cellIdentifier: String?) {
@@ -50,11 +50,9 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
         }
     }
     
-    public var cellIdentifier: String? {
-        didSet {
-            tableView?.reloadData()
-        }
-    }
+    public var cellIdentifier: String?
+    public var headerIdentifier: String?
+    public var footerIdentifier: String?
     
     public weak var delegate: TableViewDataSourceDelegate?
    
@@ -96,8 +94,15 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     // In the other way it does not visible to iOS SDK and methods in subclass are not called
     
     // UITableViewDataSource:
-    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { return nil }
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard headerIdentifier == nil else {
+            return nil
+        }
+        return sectionInfo(at: section)?.name
+    }
+    
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? { return nil }
+    
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool { return true }
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool { return false }
 
@@ -119,17 +124,36 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     
     // Variable height support
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return UITableViewAutomaticDimension }
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return UITableViewAutomaticDimension }
-    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return UITableViewAutomaticDimension }
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 0.0 }
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return 0.0 }
     
-    // NEED to validate automatic dimensions
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat { return UITableViewAutomaticDimension }
-    open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat { return UITableViewAutomaticDimension }
-    open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat { return UITableViewAutomaticDimension }
     
+    // DO not use automatic height because it is broken in SDK
     // Section header & footer information. Views are preferred over title should you decide to provide both
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { return nil }
-    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { return nil }
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerFooterView(with: headerIdentifier, in: section)
+    }
+    
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return headerFooterView(with: footerIdentifier, in: section)
+    }
+    
+    private func headerFooterView(with identifier: String?, in section: Int) -> UITableViewHeaderFooterView? {
+        guard let identifier = identifier, let sectionInfo = sectionInfo(at: section) else {
+            return nil
+        }
+        let view = tableView?.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+        guard let configurableView = view as? DataSourceConfigurable else {
+            fatalError("Cell is not implementing DataSourceConfigurable protocol")
+        }
+        configurableView.configure(with: sectionInfo)
+        return view
+    }
+
+//    open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat { return UITableViewAutomaticDimension }
+//    open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat { return UITableViewAutomaticDimension }
+
     open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) { }
     
     
