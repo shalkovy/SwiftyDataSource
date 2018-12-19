@@ -2,8 +2,8 @@
 //  FRCDataSourceContainer.swift
 //  DPDataStorage
 //
-//  Created by Alex on 10/9/17.
-//  Copyright © 2017 EffectiveSoft. All rights reserved.
+//  Created by Alexey Bakhtin on 10/9/17.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
@@ -15,8 +15,8 @@ public class FRCDataSourceContainer<ResultType: NSFetchRequestResult>: DataSourc
     
     public init(fetchRequest: NSFetchRequest<ResultType>,
                 context: NSManagedObjectContext,
-                sectionNameKeyPath: String?,
-                delegate: DataSourceContainerDelegate?) {
+                sectionNameKeyPath: String? = nil,
+                delegate: DataSourceContainerDelegate? = nil) {
         fetchedResultController =
             NSFetchedResultsController(fetchRequest: fetchRequest,
                                        managedObjectContext: context,
@@ -65,6 +65,12 @@ public class FRCDataSourceContainer<ResultType: NSFetchRequestResult>: DataSourc
         return sections[section].numberOfObjects
     }
 
+    public override var delegate: DataSourceContainerDelegate? {
+        didSet {
+            delegateForwarder.delegate = delegate
+        }
+    }
+    
     // MARK: Storage implementing
     
     fileprivate let fetchedResultController: NSFetchedResultsController<ResultType>
@@ -73,7 +79,7 @@ public class FRCDataSourceContainer<ResultType: NSFetchRequestResult>: DataSourc
 
 class CoreDataDelegateForwarder<ResultType: NSFetchRequestResult>: NSObject, NSFetchedResultsControllerDelegate {
     
-    let delegate: DataSourceContainerDelegate?
+    var delegate: DataSourceContainerDelegate?
     weak var container: FRCDataSourceContainer<ResultType>?
     
     init(delegate: DataSourceContainerDelegate? = nil, container: FRCDataSourceContainer<ResultType>? = nil) {

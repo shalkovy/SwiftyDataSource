@@ -3,7 +3,7 @@
 //  SwiftyDataSource
 //
 //  Created by Aleksey Bakhtin on 1/9/18.
-//  Copyright © 2018 EffectiveSoft. All rights reserved.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

@@ -3,7 +3,7 @@
 //  DPDataStorage
 //
 //  Created by Aleksey Bakhtin on 12/20/17.
-//  Copyright © 2017 EffectiveSoft. All rights reserved.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ enum ArrayDataSourceContainerError: Error {
     case NonValidIndexPathInsertion
 }
 
-public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContainer<ResultType> {
+public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultType> {
 
     // MARK: Initializer
     
@@ -38,17 +38,28 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
     open override func object(at indexPath: IndexPath) -> ResultType? {
         return arraySections[indexPath.section][indexPath.row]
     }
-    
-    open override func indexPath(for object: ResultType) -> IndexPath? {
+
+    open func enumerate(_ block:(IndexPath, ResultType) -> Bool) {
         for (sectionIndex, section) in arraySections.enumerated() {
-            for (objectIndex, arrayObject) in section.arrayObjects.enumerated() {
-                if (object == arrayObject) {
-                    return IndexPath(row: objectIndex, section: sectionIndex)
+            for (rowIndex, object) in section.arrayObjects.enumerated() {
+                if block(IndexPath(row: rowIndex, section: sectionIndex), object) {
+                    return
                 }
             }
         }
-        return nil
     }
+    
+    // NEED INVESTIGATE 
+//    open override func indexPath(for object: ResultType) -> IndexPath? {
+//        for (sectionIndex, section) in arraySections.enumerated() {
+//            for (objectIndex, arrayObject) in section.arrayObjects.enumerated() {
+//                if (object == arrayObject) {
+//                    return IndexPath(row: objectIndex, section: sectionIndex)
+//                }
+//            }
+//        }
+//        return nil
+//    }
     
     open override func numberOfSections() -> Int? {
         return arraySections.count
@@ -74,6 +85,21 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
         }
         
         section.insert(object: object, at: indexPath.row)
+        delegate?.container(self, didChange: object, at: nil, for: .insert, newIndexPath: indexPath)
+    }
+
+    public func replace(object: ResultType, at indexPath: IndexPath) throws {
+        let arraySection = arraySections[safe: indexPath.section]
+        guard indexPath.row <= arraySection?.arrayObjects.count ?? 0 else {
+            throw ArrayDataSourceContainerError.NonValidIndexPathInsertion
+        }
+        guard let section = arraySection else {
+            try insert(sectionObjects: [object], at: indexPath.section)
+            return
+        }
+        
+        section.replace(object: object, at: indexPath.row)
+        delegate?.container(self, didChange: object, at: indexPath, for: .update, newIndexPath: nil)
     }
 
     public func insert(sectionObjects: [ResultType], at sectionIndex: Int = 0, named name: String = "", indexTitle: String? = nil) throws {
@@ -82,10 +108,26 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
         }
         let section = Section(objects: sectionObjects, name: name, indexTitle: indexTitle)
         self.arraySections.insert(section, at: sectionIndex)
+        delegate?.container(self, didChange: section, atSectionIndex: sectionIndex, for: .insert)
+    }
+
+    public func add(sectionObjects: [ResultType], named name: String = "", indexTitle: String? = nil) {
+        let section = Section(objects: sectionObjects, name: name, indexTitle: indexTitle)
+        let sectionIndex = self.arraySections.count
+        self.arraySections.insert(section, at: sectionIndex)
+        delegate?.containerWillChangeContent(self)
+        delegate?.container(self, didChange: section, atSectionIndex: sectionIndex, for: .insert)
+        delegate?.containerDidChangeContent(self)
     }
     
     public func removeAll() {
+        let backUpArraySections = arraySections
         arraySections.removeAll()
+        delegate?.containerWillChangeContent(self)
+        for i in 0 ..< backUpArraySections.count {
+            delegate?.container(self, didChange: backUpArraySections[i], atSectionIndex: i, for: .delete)
+        }
+        delegate?.containerDidChangeContent(self)
     }
     
     // MARK: Storage implementing
@@ -123,9 +165,7 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
         public var indexTitle: String?
         
         var numberOfObjects: Int {
-            guard let objects = objects else {
-                return 0
-            }
+            guard let objects = objects else { return 0 }
             return objects.count
         }
         
@@ -138,7 +178,11 @@ public class ArrayDataSourceContainer<ResultType: Equatable>: DataSourceContaine
         func insert(object: ResultType, at index: Int) {
             self.arrayObjects.insert(object, at: index)
         }
-        
+
+        func replace(object: ResultType, at index: Int) {
+            self.arrayObjects[index] = object
+        }
+
         // MARK: Subscription
         
         subscript(index: Int) -> ResultType? {

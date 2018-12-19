@@ -2,8 +2,8 @@
 //  DataSourceContainer.swift
 //  DPDataStorage
 //
-//  Created by Alex on 10/6/17.
-//  Copyright © 2017 EffectiveSoft. All rights reserved.
+//  Created by Alexey Bakhtin on 10/6/17.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,7 @@ public class DataSourceContainer<ResultType>: DataSourceContainerProtocol {
     
     // MARK: Initializer
     
-    init(delegate: DataSourceContainerDelegate?) {
+    init(delegate: DataSourceContainerDelegate? = nil) {
         self.delegate = delegate
     }
 

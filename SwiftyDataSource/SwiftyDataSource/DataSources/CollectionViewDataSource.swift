@@ -2,8 +2,8 @@
 //  CollectionViewDataSource.swift
 //  DPDataStorage
 //
-//  Created by Alex on 12/19/17.
-//  Copyright © 2017 EffectiveSoft. All rights reserved.
+//  Created by Alexey Bakhtin on 12/19/17.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
@@ -88,6 +88,21 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
         }
         configurableCell.configure(with: object)
         return cell
+    }
+    
+    // MARK: NoDataView processing
+    
+    public var noDataView: UIView?
+    
+    public func setNoDataView(hidden: Bool) {
+        guard let _ = noDataView, let _ = collectionView else {
+            return
+        }
+        fatalError("Not implemented")
+    }
+
+    public func invertExpanding(at indexPath: IndexPath) {
+        fatalError("Not implemented")
     }
 }
 

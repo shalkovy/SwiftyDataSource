@@ -3,7 +3,7 @@
 //  SwiftyDataSourceTests
 //
 //  Created by Aleksey Bakhtin on 2/2/18.
-//  Copyright © 2018 EffectiveSoft. All rights reserved.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import XCTest

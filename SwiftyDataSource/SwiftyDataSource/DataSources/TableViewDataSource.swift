@@ -2,30 +2,20 @@
 //  TableViewDataSource.swift
 //  DPDataStorage
 //
-//  Created by Alex on 11/16/17.
-//  Copyright © 2017 EffectiveSoft. All rights reserved.
+//  Created by Alexey Bakhtin on 11/16/17.
+//  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
-
-public protocol TableViewDataSourceDelegate: class {
-    func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: Any, at indexPath: IndexPath) -> String?
-}
-
-public extension TableViewDataSourceDelegate {
-    func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: Any, at indexPath: IndexPath) -> String? {
-        return nil
-    }
-}
 
 open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: Initializer
     
-    public init(container: DataSourceContainer<ObjectType>?,
-                delegate: TableViewDataSourceDelegate?,
-                tableView: UITableView?,
-                cellIdentifier: String?) {
+    public init(tableView: UITableView?,
+                cellIdentifier: String? = nil,
+                container: DataSourceContainer<ObjectType>? = nil,
+                delegate: AnyTableViewDataSourceDelegate<ObjectType>?) {
         self.container = container
         self.delegate = delegate
         self.tableView = tableView
@@ -39,7 +29,9 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     
     public var container: DataSourceContainer<ObjectType>? {
         didSet {
+            container?.delegate = self
             tableView?.reloadData()
+            showNoDataViewIfNeeded()
         }
     }
     
@@ -51,11 +43,15 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     }
     
     public var cellIdentifier: String?
+    // If you use header and footer identifiers - provide information about height
+    // Autolayout does not work correctly for this views
     public var headerIdentifier: String?
     public var footerIdentifier: String?
+    public var headerHeight: CGFloat = 0
+    public var footerHeight: CGFloat = 0
+
+    public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
     
-    public weak var delegate: TableViewDataSourceDelegate?
-   
     // MARK: Implementing of datasource methods
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,9 +83,84 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
             fatalError("Cell is not implementing DataSourceConfigurable protocol")
         }
         configurableCell.configure(with: object)
+        if let positionHandler = cell as? DataSourcePositionHandler,
+            let position = position(of: indexPath) {
+            positionHandler.configure(for: position)
+        }
+        if let delegate = delegate,
+            let accessoryType = delegate.dataSource(self, accessoryTypeFor: object, at: indexPath) {
+            cell.accessoryType = accessoryType
+        }
+        if var expandable = cell as? DataSourceExpandable {
+            expandable.setExpanded(value: expandedCells.firstIndex(of: indexPath) != nil)
+            cell.setNeedsUpdateConstraints()
+        }
+
         return cell
     }
 
+    // MARK: NoDataView processing
+    
+    public var noDataView: UIView? {
+        didSet {
+            showNoDataViewIfNeeded()
+        }
+    }
+
+    public func setNoDataView(hidden: Bool) {
+        guard let noDataView = noDataView, let tableView = tableView else {
+            return
+        }
+        
+        if noDataView.superview != nil && noDataView.superview != tableView.backgroundView && noDataView != tableView.backgroundView {
+            noDataView.isHidden = hidden
+            noDataView.superview?.bringSubviewToFront(noDataView)
+        } else if noDataView.superview == nil && hidden == false {
+            noDataView.translatesAutoresizingMaskIntoConstraints = false
+            if tableView.backgroundView != nil {
+                tableView.backgroundView?.addSubview(noDataView)
+            } else {
+                tableView.backgroundView = noDataView
+            }
+            if let superview = noDataView.superview {
+                noDataView.centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
+                noDataView.centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = true
+                noDataView.leftAnchor.constraint(equalTo: superview.leftAnchor).isActive = true
+                noDataView.rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
+                noDataView.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
+                noDataView.bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
+            }
+        } else if noDataView.superview != nil && hidden == true {
+            if noDataView == tableView.backgroundView {
+                tableView.backgroundView = nil
+            } else {
+                noDataView.removeFromSuperview()
+            }
+        }
+    }
+    
+    // MARK: Expanding
+    
+    private var expandedCells: Set<IndexPath> = []
+    
+    public func invertExpanding(at indexPath: IndexPath) {
+        var expanded: Bool
+        if let index = expandedCells.firstIndex(of: indexPath) {
+            expandedCells.remove(at: index)
+            expanded = false
+        } else {
+            expandedCells.insert(indexPath)
+            expanded = true
+        }
+        if let cell = tableView?.cellForRow(at: indexPath),
+            var expandable = cell as? DataSourceExpandable {
+            expandable.setExpanded(value: expanded)
+            cell.setNeedsUpdateConstraints()
+        }
+        tableView?.beginUpdates()
+        tableView?.endUpdates()
+    }
+    
     // MARK: Need to implement all methods here to allow overriding in subclasses
     // In the other way it does not visible to iOS SDK and methods in subclass are not called
     
@@ -109,7 +180,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     open func sectionIndexTitles(for tableView: UITableView) -> [String]? { return nil }
     open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int { return index }
 
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { }
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { }
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) { }
 
     // UITableViewDelegate:
@@ -123,11 +194,11 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     open func tableView(_ tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) { }
     
     // Variable height support
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return UITableViewAutomaticDimension }
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 0.0 }
-    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return 0.0 }
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return UITableView.automaticDimension }
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return headerHeight }
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return footerHeight }
     
-    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat { return UITableViewAutomaticDimension }
+    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat { return UITableView.automaticDimension }
     
     // DO not use automatic height because it is broken in SDK
     // Section header & footer information. Views are preferred over title should you decide to provide both
@@ -143,9 +214,11 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
         guard let identifier = identifier, let sectionInfo = sectionInfo(at: section) else {
             return nil
         }
-        let view = tableView?.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+        guard let view = tableView?.dequeueReusableHeaderFooterView(withIdentifier: identifier) else {
+            fatalError("View is nil after dequeuring")
+        }
         guard let configurableView = view as? DataSourceConfigurable else {
-            fatalError("Cell is not implementing DataSourceConfigurable protocol")
+            fatalError("\(identifier) is not implementing DataSourceConfigurable protocol")
         }
         configurableView.configure(with: sectionInfo)
         return view
@@ -164,11 +237,14 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     open func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? { return indexPath }
     open func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? { return indexPath }
     
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let object = object(at: indexPath) else { return }
+        self.delegate?.dataSource(self, didSelect: object, at: indexPath)
+    }
     open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) { }
     
     // Editing
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle { return .delete }
+    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle { return .none }
     open func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? { return nil }
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? { return nil }
     
@@ -203,4 +279,51 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     open func tableView(_ tableView: UITableView, shouldSpringLoadRowAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
         return true
     }
+}
+
+extension TableViewDataSource: DataSourceContainerDelegate {
+    public func containerWillChangeContent(_ container: DataSourceContainerProtocol) {
+        tableView?.beginUpdates()
+    }
+    
+    public func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
+        switch (type) {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView?.insertRows(at: [indexPath], with: .fade)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView?.deleteRows(at: [indexPath], with: .fade)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                tableView?.reloadRows(at: [indexPath], with: .fade)
+            }
+        default:
+            fatalError()
+        }
+    }
+    
+    public func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
+        switch (type) {
+        case .insert:
+            tableView?.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .delete:
+            tableView?.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .update:
+            tableView?.reloadSections(IndexSet(integer: sectionIndex), with: .automatic)
+        default:
+            fatalError()
+        }
+    }
+    
+    public func container(_ container: DataSourceContainerProtocol, sectionIndexTitleForSectionName sectionName: String) -> String? {
+        fatalError()
+    }
+    
+    public func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
+        tableView?.endUpdates()
+    }
+    
 }
