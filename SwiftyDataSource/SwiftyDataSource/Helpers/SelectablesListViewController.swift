@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import SwiftyDataSource
 //import RxSwift
 
 public protocol SelectablesListDelegate {
@@ -48,11 +49,11 @@ public protocol SelectableEntity {
     func selectableEntityIsEqual(to: SelectableEntity) -> Bool
 }
 
-public class SelectablesListViewController<T>: UITableViewController where T: SelectableEntity {
+open class SelectablesListViewController<T>: UITableViewController where T: SelectableEntity {
 
     // MARK: Public
     
-    public init(container: DataSourceContainer<T>? = nil,
+    public required init(container: DataSourceContainer<T>? = nil,
                 selected: [T]? = nil,
                 multiselection: Bool = false) {
         super.init(style: .plain)
@@ -63,14 +64,16 @@ public class SelectablesListViewController<T>: UITableViewController where T: Se
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
-    
+
     public var container: DataSourceContainer<T>? {
         didSet {
             self.dataSource.container = container
         }
     }
+    
+    public var cellType: UITableViewCell.Type = SelectablesListCell.self
     
     public var delegate: AnySelectablesListDelegate<T>?
     
@@ -85,20 +88,24 @@ public class SelectablesListViewController<T>: UITableViewController where T: Se
     
     // MARK: View life cycle
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         if multiselection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done(sender:)))
         }
-        tableView.registerCellClassForDefaultIdentifier(SelectablesListCell.self)
         dataSource.tableView = tableView
+        registerCell()
     }
 
+    open func registerCell() {
+        tableView.registerCellClassForDefaultIdentifier(cellType.self)
+    }
+    
     // MARK: DataSource
     
     lazy var dataSource: TableViewDataSource<T> = {
         let dataSource = TableViewDataSource<T>(tableView: nil, cellIdentifier: nil, container: container, delegate: AnyTableViewDataSourceDelegate(self))
-        dataSource.cellIdentifier = SelectablesListCell.defaultReuseIdentifier
+        dataSource.cellIdentifier = cellType.defaultReuseIdentifier
         return dataSource
     }()
     
@@ -138,9 +145,9 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
     }
 }
 
-class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
+public class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
     
-    private let label = UILabel()
+    public let label = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -162,7 +169,7 @@ class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
         label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15).isActive = true
     }
     
-    func configure(with object: Any) {
+    public func configure(with object: Any) {
         self.entity = object as? SelectableEntity
     }
     

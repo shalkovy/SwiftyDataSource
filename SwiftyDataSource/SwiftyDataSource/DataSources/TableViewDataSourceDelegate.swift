@@ -34,7 +34,7 @@ public extension TableViewDataSourceDelegate {
 // MARK: Type erasure for protocol with associated type. So we can use protocol for initializing
 
 public class AnyTableViewDataSourceDelegate<T>: TableViewDataSourceDelegate {
-    required init<U: TableViewDataSourceDelegate>(_ delegate: U) where U.ObjectType == T {
+    public required init<U: TableViewDataSourceDelegate>(_ delegate: U) where U.ObjectType == T {
         _dataSourceCellIdentifierForObjectAtIndexPath = delegate.dataSource
         _dataSourceAccessoryTypeForObjectAtIndexPath = delegate.dataSource
         _dataSourceDidSelectObjectAtIndexPath = delegate.dataSource
