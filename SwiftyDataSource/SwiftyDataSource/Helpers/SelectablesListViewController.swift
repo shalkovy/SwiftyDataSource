@@ -73,7 +73,6 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         }
     }
     
-    public var cellType: UITableViewCell.Type = SelectablesListCell.self
     
     public var delegate: AnySelectablesListDelegate<T>?
     
@@ -93,19 +92,23 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         if multiselection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done(sender:)))
         }
-        dataSource.tableView = tableView
         registerCell()
+        dataSource.tableView = tableView
+    }
+
+    open func cellType() -> UITableViewCell.Type {
+        return SelectablesListCell.self
     }
 
     open func registerCell() {
-        tableView.registerCellClassForDefaultIdentifier(cellType.self)
+        tableView.registerCellClassForDefaultIdentifier(cellType())
     }
     
     // MARK: DataSource
     
     lazy var dataSource: TableViewDataSource<T> = {
         let dataSource = TableViewDataSource<T>(tableView: nil, cellIdentifier: nil, container: container, delegate: AnyTableViewDataSourceDelegate(self))
-        dataSource.cellIdentifier = cellType.defaultReuseIdentifier
+        dataSource.cellIdentifier = cellType().defaultReuseIdentifier
         return dataSource
     }()
     
