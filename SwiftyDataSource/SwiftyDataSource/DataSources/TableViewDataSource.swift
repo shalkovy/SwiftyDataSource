@@ -77,7 +77,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
             fatalError("Cell identifier is empty")
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) else {
-            fatalError("Cell is nil after dequeuring")
+            fatalError("Cell is nil after dequeuring for identifier: \(identifier)")
         }
         guard let configurableCell = cell as? DataSourceConfigurable else {
             fatalError("Cell is not implementing DataSourceConfigurable protocol")

@@ -73,7 +73,6 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         }
     }
     
-    
     public var delegate: AnySelectablesListDelegate<T>?
     
 //    public var selectedEntry = Variable<T?>(nil)
@@ -96,19 +95,19 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         dataSource.tableView = tableView
     }
 
-    open func cellType() -> UITableViewCell.Type {
-        return SelectablesListCell.self
+    open func cellIdentifier() -> String {
+        return SelectablesListCell.defaultReuseIdentifier
     }
 
     open func registerCell() {
-        tableView.registerCellClassForDefaultIdentifier(cellType())
+        tableView.registerCellClassForDefaultIdentifier(SelectablesListCell.self)
     }
     
     // MARK: DataSource
     
     lazy var dataSource: TableViewDataSource<T> = {
         let dataSource = TableViewDataSource<T>(tableView: nil, cellIdentifier: nil, container: container, delegate: AnyTableViewDataSourceDelegate(self))
-        dataSource.cellIdentifier = cellType().defaultReuseIdentifier
+        dataSource.cellIdentifier = cellIdentifier()
         return dataSource
     }()
     
