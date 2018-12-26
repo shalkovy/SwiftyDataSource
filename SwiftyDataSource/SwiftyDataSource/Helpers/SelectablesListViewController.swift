@@ -17,13 +17,13 @@ public protocol SelectablesListDelegate {
     func listDidDeselect(_ list: SelectablesListViewController<T>, _ entity: T)
 }
 
-extension SelectablesListDelegate {
+public extension SelectablesListDelegate {
     func listDidSelect(_ list: SelectablesListViewController<T>, entities: [T]) { }
     func listDidDeselect(_ list: SelectablesListViewController<T>, _ entity: T) { }
 }
 
 public class AnySelectablesListDelegate<T>: SelectablesListDelegate where T: SelectableEntity {
-    required init<U: SelectablesListDelegate>(_ delegate: U) where U.T == T {
+    public required init<U: SelectablesListDelegate>(_ delegate: U) where U.T == T {
         _listDidSelectEntity = delegate.listDidSelect
         _listDidDeselectEntity = delegate.listDidDeselect
         _listDidSelectEntities = delegate.listDidSelect
@@ -146,7 +146,7 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
     }
 }
 
-public class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
+open class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
     
     public let label = UILabel()
     
@@ -155,7 +155,7 @@ public class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
