@@ -138,6 +138,9 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
     }
     
     public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath) -> UITableViewCell.AccessoryType? {
+        if isObjectSelected(object) {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
         return isObjectSelected(object) ? .checkmark : .none
     }
     
