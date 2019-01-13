@@ -76,6 +76,8 @@ public class DataSourceContainer<ResultType>: DataSourceContainerProtocol {
 
 public protocol DataSourceContainerDelegate {
     
+    // MARK: - Optional
+
     func containerWillChangeContent(_ container: DataSourceContainerProtocol)
     
     func container(_ container: DataSourceContainerProtocol,
@@ -92,6 +94,27 @@ public protocol DataSourceContainerDelegate {
     func container(_ container: DataSourceContainerProtocol,
                    sectionIndexTitleForSectionName sectionName: String) -> String?
     
+    // MARK: - Required
+    
     func containerDidChangeContent(_ container: DataSourceContainerProtocol)
+
+}
+
+public extension DataSourceContainerDelegate {
+    func containerWillChangeContent(_ container: DataSourceContainerProtocol) { }
+    
+    func container(_ container: DataSourceContainerProtocol,
+                   didChange anObject: Any,
+                   at indexPath: IndexPath?,
+                   for type: DataSourceObjectChangeType,
+                   newIndexPath: IndexPath?) { }
+    
+    func container(_ container: DataSourceContainerProtocol,
+                   didChange sectionInfo: DataSourceSectionInfo,
+                   atSectionIndex sectionIndex: Int,
+                   for type: DataSourceObjectChangeType) { }
+    
+    func container(_ container: DataSourceContainerProtocol,
+                   sectionIndexTitleForSectionName sectionName: String) -> String? { return nil }
 
 }
