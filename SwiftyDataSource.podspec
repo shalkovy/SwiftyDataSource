@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/abakhtin/SwiftyDataSource" }
 
-  s.source_files = "SwiftyDataSource/SwiftyDataSource/*"
+  s.source_files = "SwiftyDataSource/SwiftyDataSource/Containers/*", "SwiftyDataSource/SwiftyDataSource/DataSources/*", "SwiftyDataSource/SwiftyDataSource/Helpers/*"
   s.requires_arc = true
 
 end
