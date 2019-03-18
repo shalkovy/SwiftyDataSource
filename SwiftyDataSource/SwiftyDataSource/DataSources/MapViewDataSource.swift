@@ -9,11 +9,16 @@
 import UIKit
 import MapKit
 
-class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegate, DataSourceContainerDelegate where ObjectType: MKAnnotation {
+public protocol IMapView {
+    func addAnnotations(for objects: [MKAnnotation])
+    func showAnnotations(_ objects: [MKAnnotation], animated: Bool)
+}
+
+open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegate, DataSourceContainerDelegate where ObjectType: MKAnnotation {
     
     // MARK: Initializer
     
-    public init(mapView: MKMapView?,
+    public init(mapView: IMapView?,
                 annotationViewClass: AnyClass? = nil,
                 container: DataSourceContainer<ObjectType>? = nil,
                 delegate: AnyTableViewDataSourceDelegate<ObjectType>?) {
@@ -26,7 +31,7 @@ class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegate, Da
     
     // MARK: Public properties
 
-    public var mapView: MKMapView? {
+    public var mapView: IMapView? {
         didSet {
             reloadAnnotations()
         }
@@ -35,68 +40,76 @@ class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegate, Da
     public var annotationViewClass: AnyClass?
     public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
 
+    open func showAnnotations(_ objects: [ObjectType]) {
+        mapView?.showAnnotations(objects, animated: true)
+    }
+    
+    open func addAnnotations(_ objects: [ObjectType]) {
+        mapView?.addAnnotations(for: objects)
+    }
+
     // MARK: DataSource implementation
     
-    var container: DataSourceContainer<ObjectType>? {
+    public var container: DataSourceContainer<ObjectType>? {
         didSet {
             container?.delegate = self
             reloadAnnotations()
         }
     }
     
-    var noDataView: UIView?
+    public var noDataView: UIView?
     
-    func setNoDataView(hidden: Bool) {
+    public func setNoDataView(hidden: Bool) {
         fatalError()
     }
     
-    func invertExpanding(at indexPath: IndexPath) {
+    public func invertExpanding(at indexPath: IndexPath) {
         fatalError()
     }
     
     // MARK: Private
     
     private func reloadAnnotations() {
-        guard let mapView = mapView,
+        guard mapView != nil,
             let container = container,
             annotationViewClass != nil else {
             return;
         }
 
         if let objects = container.fetchedObjects {
-            mapView.addAnnotations(objects)
-            mapView.showAnnotations(objects, animated: true)
+            addAnnotations(objects)
+            showAnnotations(objects)
         }
     }
     
-    private func addAnnotation(_ annotation: MKAnnotation) {
-        self.mapView?.addAnnotation(annotation)
-    }
-
-    private func removeAnnotation(_ annotation: MKAnnotation) {
-        self.mapView?.removeAnnotation(annotation)
-    }
+//    private func addAnnotation(_ annotation: MKAnnotation) {
+//        self.mapView?.addAnnotation(annotation)
+//    }
+//
+//    private func removeAnnotation(_ annotation: MKAnnotation) {
+//        self.mapView?.removeAnnotation(annotation)
+//    }
 
     // MARK: Container delegate
     
     
-    func containerWillChangeContent(_ container: DataSourceContainerProtocol) {
+    open func containerWillChangeContent(_ container: DataSourceContainerProtocol) {
         
     }
     
-    func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
+    open func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
         
     }
     
-    func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
+    open func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
         
     }
     
-    func container(_ container: DataSourceContainerProtocol, sectionIndexTitleForSectionName sectionName: String) -> String? {
+    open func container(_ container: DataSourceContainerProtocol, sectionIndexTitleForSectionName sectionName: String) -> String? {
         return nil
     }
     
-    func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
+    open func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
         
     }
 }
