@@ -18,10 +18,10 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
     
     // MARK: Initializer
     
-    public init(mapView: IMapView?,
+    public init(mapView: IMapView? = nil,
                 annotationViewClass: AnyClass? = nil,
                 container: DataSourceContainer<ObjectType>? = nil,
-                delegate: AnyTableViewDataSourceDelegate<ObjectType>?) {
+                delegate: AnyMapViewDataSourceDelegate<ObjectType>? = nil) {
         self.container = container
         self.delegate = delegate
         self.mapView = mapView
@@ -33,12 +33,13 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
 
     public var mapView: IMapView? {
         didSet {
+//            mapView?.delegate = self
             reloadAnnotations()
         }
     }
 
     public var annotationViewClass: AnyClass?
-    public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
+    public var delegate: AnyMapViewDataSourceDelegate<ObjectType>?
 
     open func showAnnotations(_ objects: [ObjectType]) {
         mapView?.showAnnotations(objects, animated: true)
@@ -112,4 +113,12 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
     open func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
         
     }
+    
+    // MARK: MKMapViewDelegate
+    
+    public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? ObjectType else { return }
+        delegate?.dataSource(self, didSelect: annotation)
+    }
+
 }
