@@ -9,7 +9,12 @@
 import UIKit
 
 open class UITableViewCellSubtitle: UITableViewCell {
-    @IBOutlet var titleLabel: UILabel?
-    @IBOutlet var valueLabel: UILabel?
-    @IBOutlet var iconImageView: UIImageView?
+    @IBOutlet
+    open var titleLabel: UILabel?
+    
+    @IBOutlet
+    open var valueLabel: UILabel?
+    
+    @IBOutlet
+    open var iconImageView: UIImageView?
 }
