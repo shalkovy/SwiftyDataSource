@@ -55,7 +55,7 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
     
     public var noDataView: UIView?
     
-    public func setNoDataView(hidden: Bool) {
+    open func setNoDataView(hidden: Bool) {
         fatalError()
     }
     

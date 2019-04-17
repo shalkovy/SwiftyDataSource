@@ -94,7 +94,7 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
     
     public var noDataView: UIView?
     
-    public func setNoDataView(hidden: Bool) {
+    open func setNoDataView(hidden: Bool) {
         guard let _ = noDataView, let _ = collectionView else {
             return
         }

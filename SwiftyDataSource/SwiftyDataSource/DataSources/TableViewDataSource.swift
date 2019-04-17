@@ -108,7 +108,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
         }
     }
 
-    public func setNoDataView(hidden: Bool) {
+    open func setNoDataView(hidden: Bool) {
         guard let noDataView = noDataView, let tableView = tableView else {
             return
         }

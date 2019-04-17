@@ -31,7 +31,7 @@ public protocol DataSourceExpandable {
     mutating func setExpanded(value: Bool)
 }
 
-extension DataSourceExpandable {
+public extension DataSourceExpandable {
     mutating func setExpanded(value: Bool) {
         expanded = value
     }
