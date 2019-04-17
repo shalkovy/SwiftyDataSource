@@ -39,7 +39,7 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         return arraySections[indexPath.section][indexPath.row]
     }
 
-    open func enumerate(_ block:(IndexPath, ResultType) -> Bool) {
+    open func search(_ block:(IndexPath, ResultType) -> Bool) {
         for (sectionIndex, section) in arraySections.enumerated() {
             for (rowIndex, object) in section.arrayObjects.enumerated() {
                 if block(IndexPath(row: rowIndex, section: sectionIndex), object) {
@@ -48,7 +48,15 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
             }
         }
     }
-    
+
+    open func enumerate(_ block:(IndexPath, ResultType) -> Void) {
+        for (sectionIndex, section) in arraySections.enumerated() {
+            for (rowIndex, object) in section.arrayObjects.enumerated() {
+                block(IndexPath(row: rowIndex, section: sectionIndex), object)
+            }
+        }
+    }
+
     // NEED INVESTIGATE 
 //    open override func indexPath(for object: ResultType) -> IndexPath? {
 //        for (sectionIndex, section) in arraySections.enumerated() {
@@ -109,6 +117,15 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         let section = Section(objects: sectionObjects, name: name, indexTitle: indexTitle)
         self.arraySections.insert(section, at: sectionIndex)
         delegate?.container(self, didChange: section, atSectionIndex: sectionIndex, for: .insert)
+    }
+
+    public func replace(sectionObjects: [ResultType], at sectionIndex: Int, named name: String = "", indexTitle: String? = nil) throws {
+        guard sectionIndex <= self.arraySections.count else {
+            throw ArrayDataSourceContainerError.NonValidIndexPathInsertion
+        }
+        let section = Section(objects: sectionObjects, name: name, indexTitle: indexTitle)
+        self.arraySections[sectionIndex] = section
+        delegate?.container(self, didChange: section, atSectionIndex: sectionIndex, for: .update)
     }
 
     public func add(sectionObjects: [ResultType], named name: String = "", indexTitle: String? = nil) {

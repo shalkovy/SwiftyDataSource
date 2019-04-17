@@ -12,7 +12,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
 
     // MARK: Initializer
     
-    public init(tableView: UITableView?,
+    public init(tableView: UITableView? = nil,
                 cellIdentifier: String? = nil,
                 container: DataSourceContainer<ObjectType>? = nil,
                 delegate: AnyTableViewDataSourceDelegate<ObjectType>?) {
@@ -23,6 +23,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
         super.init()
         self.tableView?.dataSource = self
         self.tableView?.delegate = self
+        self.container?.delegate = self
     }
 
     // MARK: Public properties
@@ -47,8 +48,8 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     // Autolayout does not work correctly for this views
     public var headerIdentifier: String?
     public var footerIdentifier: String?
-    public var headerHeight: CGFloat = 0
-    public var footerHeight: CGFloat = 0
+    public var headerHeight: CGFloat = 0.01
+    public var footerHeight: CGFloat = 0.01
 
     public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
     
@@ -297,8 +298,10 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 tableView?.deleteRows(at: [indexPath], with: .fade)
             }
         case .update:
-            if let indexPath = indexPath {
-                tableView?.reloadRows(at: [indexPath], with: .fade)
+            if let indexPath = indexPath,
+                let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable,
+                let object = object(at: indexPath) {
+                cell.configure(with: object)
             }
         default:
             fatalError()

@@ -10,8 +10,9 @@ import UIKit
 import Foundation
 
 public extension UIButton {
+    
     @IBInspectable
-    public var normalBackgroundColor: UIColor? {
+    var normalBackgroundColor: UIColor? {
         set {
             setBackgroundColor(color: newValue, forUIControlState: .normal)
         }
@@ -21,7 +22,7 @@ public extension UIButton {
     }
     
     @IBInspectable
-    public var highlightedBackgroundColor: UIColor? {
+    var highlightedBackgroundColor: UIColor? {
         set {
             let newColor = newValue?.withAlphaComponent(0.5)
             setBackgroundColor(color: newColor, forUIControlState: .highlighted)
@@ -32,7 +33,7 @@ public extension UIButton {
     }
 
     @IBInspectable
-    public var selectedBackgroundColor: UIColor? {
+    var selectedBackgroundColor: UIColor? {
         set {
             setBackgroundColor(color: newValue, forUIControlState: .selected)
         }
@@ -41,7 +42,7 @@ public extension UIButton {
         }
     }
 
-    public func setBackgroundColor(color: UIColor?, forUIControlState state: UIControl.State) {
+    func setBackgroundColor(color: UIColor?, forUIControlState state: UIControl.State) {
         guard let color = color else {
             setBackgroundImage(nil, for: state)
             return

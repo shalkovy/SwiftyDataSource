@@ -1,15 +1,15 @@
 //
 //  UIControl+EnabledMarkedly.swift
-//  HRketing
+//  launchOptions
 //
-//  Created by Aleksey Bakhtin on 12/20/17.
+//  Created by Alexey Bakhtin on 10/9/18.
 //  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
 
 public extension UIControl {
-    public var isEnabledMarkedly: Bool {
+    var isEnabledMarkedly: Bool {
         get {
             return isEnabled
         }

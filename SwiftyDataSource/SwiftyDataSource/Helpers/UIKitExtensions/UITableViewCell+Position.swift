@@ -1,14 +1,15 @@
 //
 //  UITableViewCell+Position.swift
-//  HRketing
+//  launchOptions
 //
-//  Created by Aleksey Bakhtin on 12/20/17.
+//  Created by Alexey Bakhtin on 06/09/2018.
 //  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
 
 extension UITableViewCell {
+    
     public enum Position {
         case first
         case middle
@@ -19,6 +20,7 @@ extension UITableViewCell {
 }
 
 extension TableViewDataSource {
+
     func position(of indexPath: IndexPath) -> UITableViewCell.Position? {
         guard let rowsCount = numberOfItems(in: indexPath.section) else {
             return nil

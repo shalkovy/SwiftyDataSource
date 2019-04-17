@@ -1,6 +1,6 @@
 //
 //  MapViewDataSource.swift
-//  HRketing
+//  launchOptions
 //
 //  Created by Aleksey Bakhtin on 12/20/17.
 //  Copyright © 2018 launchOptions. All rights reserved.
@@ -9,16 +9,11 @@
 import UIKit
 import MapKit
 
-public protocol IMapView {
-    func addAnnotations(for objects: [MKAnnotation])
-    func showAnnotations(_ objects: [MKAnnotation], animated: Bool)
-}
-
 open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegate, DataSourceContainerDelegate where ObjectType: MKAnnotation {
     
     // MARK: Initializer
     
-    public init(mapView: IMapView? = nil,
+    public init(mapView: MKMapView? = nil,
                 annotationViewClass: AnyClass? = nil,
                 container: DataSourceContainer<ObjectType>? = nil,
                 delegate: AnyMapViewDataSourceDelegate<ObjectType>? = nil) {
@@ -31,9 +26,9 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
     
     // MARK: Public properties
 
-    public var mapView: IMapView? {
+    public var mapView: MKMapView? {
         didSet {
-//            mapView?.delegate = self
+            mapView?.delegate = self
             reloadAnnotations()
         }
     }
@@ -46,7 +41,7 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
     }
     
     open func addAnnotations(_ objects: [ObjectType]) {
-        mapView?.addAnnotations(for: objects)
+        mapView?.addAnnotations(objects)
     }
 
     // MARK: DataSource implementation
@@ -83,14 +78,6 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         }
     }
     
-//    private func addAnnotation(_ annotation: MKAnnotation) {
-//        self.mapView?.addAnnotation(annotation)
-//    }
-//
-//    private func removeAnnotation(_ annotation: MKAnnotation) {
-//        self.mapView?.removeAnnotation(annotation)
-//    }
-
     // MARK: Container delegate
     
     

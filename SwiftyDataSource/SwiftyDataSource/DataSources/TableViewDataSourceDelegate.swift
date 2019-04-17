@@ -1,6 +1,6 @@
 //
 //  TableViewDataSourceDelegate.swift
-//  HRketing
+//  launchOptions
 //
 //  Created by Aleksey Bakhtin on 12/20/17.
 //  Copyright © 2018 launchOptions. All rights reserved.
@@ -30,6 +30,7 @@ public extension TableViewDataSourceDelegate {
     
     func dataSource(_ dataSource: DataSourceProtocol, didSelect object: ObjectType, at indexPath: IndexPath) { }
 }
+
 
 // MARK: Type erasure for protocol with associated type. So we can use protocol for initializing
 

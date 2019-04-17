@@ -22,10 +22,10 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
     
     // MARK: Initializer
     
-    public init(collectionView: UICollectionView,
-                container: DataSourceContainer<ObjectType>,
-                delegate: CollectionViewDataSourceDelegate?,
-                cellIdentifier: String?) {
+    public init(collectionView: UICollectionView? = nil,
+                container: DataSourceContainer<ObjectType>? = nil,
+                delegate: CollectionViewDataSourceDelegate? = nil,
+                cellIdentifier: String? = nil) {
         self.collectionView = collectionView
         self.delegate = delegate
         self.cellIdentifier = cellIdentifier

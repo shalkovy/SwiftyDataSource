@@ -2,8 +2,8 @@
 //  NoDataView+Text.swift
 //  HRketing
 //
-//  Created by Aleksey Bakhtin on 12/20/17.
-//  Copyright © 2018 launchOptions. All rights reserved.
+//  Created by Alexey Bakhtin on 04/09/2018.
+//  Copyright © 2018 HRketing. All rights reserved.
 //
 
 import Foundation

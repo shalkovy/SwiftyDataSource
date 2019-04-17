@@ -1,8 +1,8 @@
 //
 //  UIView+Corners.swift
-//  HRketing
+//  launchOptions
 //
-//  Created by Aleksey Bakhtin on 12/20/17.
+//  Created by Alexey Bakhtin on 9/20/18.
 //  Copyright © 2018 launchOptions. All rights reserved.
 //
 

@@ -1,6 +1,6 @@
 //
 //  DataSourceViews.swift
-//  HRketing
+//  launchOptions
 //
 //  Created by Aleksey Bakhtin on 12/20/17.
 //  Copyright © 2018 launchOptions. All rights reserved.

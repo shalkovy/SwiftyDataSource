@@ -1,8 +1,8 @@
 //
 //  InstantiatableFromStoryboard.swift
-//  HRketing
+//  launchOptions
 //
-//  Created by Aleksey Bakhtin on 12/20/17.
+//  Created by Alexey Bakhtin on 10/1/18.
 //  Copyright © 2018 launchOptions. All rights reserved.
 //
 
@@ -14,21 +14,21 @@ public protocol InstantiatableFromStoryboard {
 }
 
 public extension InstantiatableFromStoryboard {
-    public static func defaultContainingStoryboard() -> UIStoryboard {
+    static func defaultContainingStoryboard() -> UIStoryboard {
         return UIStoryboard(name: String(describing: self), bundle: nil)
     }
     
-    public static func storyboardIdentifier() -> String {
+    static func storyboardIdentifier() -> String {
         return String(describing: self)
     }
 }
 
 public extension UIStoryboard {
-    public class func instantiate<T: InstantiatableFromStoryboard>(viewControllerOf type: T.Type) -> T {
+    class func instantiate<T: InstantiatableFromStoryboard>(viewControllerOf type: T.Type) -> T {
         return T.defaultContainingStoryboard().instantiate(viewControllerOf: type)
     }
     
-    public func instantiate<T: InstantiatableFromStoryboard>(viewControllerOf type: T.Type) -> T {
+    func instantiate<T: InstantiatableFromStoryboard>(viewControllerOf type: T.Type) -> T {
         let instance = self.instantiateViewController(withIdentifier: T.storyboardIdentifier())
         guard let typedInstance = instance as? T else {
             fatalError("Could not cast instantiated value to expected type")
@@ -38,7 +38,7 @@ public extension UIStoryboard {
 }
 
 public extension UINib {
-    public static func instantiate<T>(objectOf type: T.Type,
+    static func instantiate<T>(objectOf type: T.Type,
                                       nibName: String? = nil,
                                       bundle: Bundle? = nil,
                                       owner: AnyObject? = nil,

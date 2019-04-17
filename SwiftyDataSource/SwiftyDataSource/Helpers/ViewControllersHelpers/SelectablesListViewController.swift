@@ -1,14 +1,12 @@
 //
 //  SelectablesListViewController.swift
-//  HRketing
+//  launchOptions
 //
-//  Created by Aleksey Bakhtin on 12/20/17.
+//  Created by Alexey Bakhtin on 10/1/18.
 //  Copyright © 2018 launchOptions. All rights reserved.
 //
 
 import UIKit
-//import SwiftyDataSource
-//import RxSwift
 
 public protocol SelectablesListDelegate {
     associatedtype T: SelectableEntity
@@ -53,7 +51,7 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
 
     // MARK: Public
     
-    public required init(container: DataSourceContainer<T>? = nil,
+    public init(container: DataSourceContainer<T>? = nil,
                 selected: [T]? = nil,
                 multiselection: Bool = false) {
         super.init(style: .plain)
@@ -64,9 +62,9 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
-
+    
     public var container: DataSourceContainer<T>? {
         didSet {
             self.dataSource.container = container
@@ -74,13 +72,12 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     }
     
     public var delegate: AnySelectablesListDelegate<T>?
-    
-//    public var selectedEntry = Variable<T?>(nil)
+    public var didSelectAction: ((T) -> ())?
 
     // MARK: Actions
     
     @objc
-    private func done(sender: AnyObject) {
+    private func done(_ sender: AnyObject) {
         delegate?.listDidSelect(self, entities: selectedEntries)
     }
     
@@ -89,7 +86,7 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     open override func viewDidLoad() {
         super.viewDidLoad()
         if multiselection {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done(sender:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done(_:)))
         }
         registerCell()
         dataSource.tableView = tableView
@@ -102,7 +99,7 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     open func registerCell() {
         tableView.registerCellClassForDefaultIdentifier(SelectablesListCell.self)
     }
-    
+
     // MARK: DataSource
     
     lazy var dataSource: TableViewDataSource<T> = {
@@ -121,7 +118,7 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
     public func dataSource(_ dataSource: DataSourceProtocol, didSelect object: T, at indexPath: IndexPath) {
         let index = selectedEntries.firstIndex(where: { $0.selectableEntityIsEqual(to: object)})
         if index == nil {
-//            selectedEntry.value = object
+            didSelectAction?(object)
             selectedEntries.append(object)
         } else if multiselection, let indexExp = index {
             selectedEntries.remove(at: indexExp)
@@ -134,13 +131,12 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
             delegate?.listDidDeselect(self, object)
         }
         
+        tableView.deselectRow(at: indexPath, animated: true)
         tableView.cellForRow(at: indexPath)?.accessoryType = isObjectSelected(object) ? .checkmark : .none
     }
     
-    public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath) -> UITableViewCell.AccessoryType? {
-        if isObjectSelected(object) {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
+    public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath)
+        -> UITableViewCell.AccessoryType? {
         return isObjectSelected(object) ? .checkmark : .none
     }
     

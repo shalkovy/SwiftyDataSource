@@ -3,7 +3,7 @@
 //  DPDataStorage
 //
 //  Created by Alexey Bakhtin on 12/18/17.
-//  Copyright © 2018 launchOptions. All rights reserved.
+//  Copyright © 2017 launchOptions. All rights reserved.
 //
 
 import Foundation
