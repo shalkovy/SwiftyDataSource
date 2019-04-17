@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     // Should be called after views layout
     func round(corners: UIRectCorner, byRadius value: CGFloat) {

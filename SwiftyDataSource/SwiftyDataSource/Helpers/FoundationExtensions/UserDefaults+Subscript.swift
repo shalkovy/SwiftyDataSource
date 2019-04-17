@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension UserDefaults {
+public extension UserDefaults {
     subscript<T>(key: String) -> T? {
         get {
             return value(forKey: key) as? T

@@ -8,8 +8,7 @@
 
 import UIKit
 
-extension UIResponder {
-
+public extension UIResponder {
     func nextViewControllerInResponderChain<T>() -> T? {
         var responder: UIResponder? = self
         while responder != nil {

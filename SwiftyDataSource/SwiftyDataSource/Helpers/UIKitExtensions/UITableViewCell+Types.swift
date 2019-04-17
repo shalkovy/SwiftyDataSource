@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UITableViewCellSubtitle: UITableViewCell {
+public class UITableViewCellSubtitle: UITableViewCell {
     @IBOutlet var titleLabel: UILabel?
     @IBOutlet var valueLabel: UILabel?
     @IBOutlet var iconImageView: UIImageView?

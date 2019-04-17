@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIWindow {
+public extension UIWindow {
     
     /// Fix for http://stackoverflow.com/a/27153956/849645
     func setRootViewController(_ newRootViewController: UIViewController, withTransition transition: CATransition? = nil) {

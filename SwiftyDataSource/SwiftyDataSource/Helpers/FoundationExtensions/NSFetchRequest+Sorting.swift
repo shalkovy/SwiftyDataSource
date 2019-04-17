@@ -9,10 +9,10 @@
 import Foundation
 import CoreData
 
-extension NSFetchRequest {
+public extension NSFetchRequest {
     
     @objc
-    public func sorted(by descriptors: [NSSortDescriptor]) -> Self {
+    func sorted(by descriptors: [NSSortDescriptor]) -> Self {
         self.sortDescriptors = descriptors
         return self
     }

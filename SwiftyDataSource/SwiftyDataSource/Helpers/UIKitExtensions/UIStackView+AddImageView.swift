@@ -8,8 +8,8 @@
 
 import UIKit
 
-extension UIStackView {
-    public func addImageViewArrangedSubview(_ imageView: UIImageView) {
+public extension UIStackView {
+    func addImageViewArrangedSubview(_ imageView: UIImageView) {
         // Need to add ratio constraint to prevent stretching
         imageView.translatesAutoresizingMaskIntoConstraints = false
         if let image = imageView.image {
