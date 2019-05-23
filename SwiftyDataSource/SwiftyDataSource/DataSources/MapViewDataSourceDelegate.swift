@@ -1,5 +1,5 @@
 //
-//  TableViewDataSourceDelegate.swift
+//  MapViewDataSourceDelegate.swift
 //  launchOptions
 //
 //  Created by Aleksey Bakhtin on 12/20/17.

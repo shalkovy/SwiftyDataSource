@@ -96,6 +96,15 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         delegate?.container(self, didChange: object, at: nil, for: .insert, newIndexPath: indexPath)
     }
 
+    public func remove(at indexPath: IndexPath) throws {
+        guard let arraySection = arraySections[safe: indexPath.section],
+            indexPath.row <= arraySection.arrayObjects.count else {
+            throw ArrayDataSourceContainerError.NonValidIndexPathInsertion
+        }
+        arraySection.remove(at: indexPath.row)
+        delegate?.container(self, didChange: object, at: indexPath, for: .delete, newIndexPath: nil)
+    }
+
     public func replace(object: ResultType, at indexPath: IndexPath) throws {
         let arraySection = arraySections[safe: indexPath.section]
         guard indexPath.row <= arraySection?.arrayObjects.count ?? 0 else {
@@ -194,6 +203,10 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         
         func insert(object: ResultType, at index: Int) {
             self.arrayObjects.insert(object, at: index)
+        }
+
+        func remove(at index: Int) {
+            self.arrayObjects.remove(at: index)
         }
 
         func replace(object: ResultType, at index: Int) {
