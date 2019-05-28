@@ -131,7 +131,7 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
             delegate?.listDidDeselect(self, object)
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
+//        tableView.deselectRow(at: indexPath, animated: true)
         tableView.cellForRow(at: indexPath)?.accessoryType = isObjectSelected(object) ? .checkmark : .none
     }
     
