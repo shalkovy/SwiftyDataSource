@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyDataSource
 
 public protocol SelectablesListDelegate {
     associatedtype T: SelectableEntity
@@ -93,6 +94,20 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         tableView.allowsMultipleSelection = multiselection
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        selectedEntries.forEach { selectedEntry in
+            tableView.selectRow(at: container?.indexPath(for: selectedEntry), animated: false, scrollPosition: .none)
+//            self.container?.search({ (indexPath, entity) -> Bool in
+//                let isSelectable = entity.selectableEntityIsEqual(to: selectedEntry)
+//                if isSelectable {
+//                    tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+//                }
+//                return isSelectable
+//            })
+        }
+    }
+    
     open func cellIdentifier() -> String {
         return SelectablesListCell.defaultReuseIdentifier
     }
@@ -132,16 +147,11 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
             delegate?.listDidDeselect(self, object)
         }
         
-//        tableView.deselectRow(at: indexPath, animated: true)
         tableView.cellForRow(at: indexPath)?.accessoryType = isObjectSelected(object) ? .checkmark : .none
     }
     
     public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath)
         -> UITableViewCell.AccessoryType? {
-        if isObjectSelected(object) {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-
         return isObjectSelected(object) ? .checkmark : .none
     }
     

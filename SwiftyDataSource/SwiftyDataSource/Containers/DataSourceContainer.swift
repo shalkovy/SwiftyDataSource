@@ -70,6 +70,11 @@ public class DataSourceContainer<ResultType>: DataSourceContainerProtocol {
         assertionFailure("Should be overriden in subclasses")
         return nil
     }
+
+    open func search(_ block:(IndexPath, ResultType) -> Bool) {
+//        assertionFailure("Should be overriden in subclasses")
+    }
+
 }
 
 // MARK: DataSourceContainerDelegate

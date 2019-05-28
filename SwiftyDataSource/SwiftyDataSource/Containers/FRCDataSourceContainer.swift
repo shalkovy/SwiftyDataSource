@@ -47,6 +47,18 @@ public class FRCDataSourceContainer<ResultType: NSFetchRequestResult>: DataSourc
         return fetchedResultController.object(at: indexPath)
     }
     
+    open override func search(_ block:(IndexPath, ResultType) -> Bool) {
+//        guard let fetchedObjects = fetchedObjects else {
+//            return
+//        }
+//        
+//        for object in fetchedObjects {
+//            if block(indexPath(for: object) ?? IndexPath(row: 0, section: 0), object) {
+//                return
+//            }
+//        }
+    }
+
     open override func indexPath(for object: ResultType) -> IndexPath? {
         return fetchedResultController.indexPath(forObject: object)
     }

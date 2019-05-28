@@ -39,7 +39,7 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         return arraySections[indexPath.section][indexPath.row]
     }
 
-    open func search(_ block:(IndexPath, ResultType) -> Bool) {
+    open override func search(_ block:(IndexPath, ResultType) -> Bool) {
         for (sectionIndex, section) in arraySections.enumerated() {
             for (rowIndex, object) in section.arrayObjects.enumerated() {
                 if block(IndexPath(row: rowIndex, section: sectionIndex), object) {
