@@ -90,6 +90,7 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         }
         registerCell()
         dataSource.tableView = tableView
+        tableView.allowsMultipleSelection = multiselection
     }
 
     open func cellIdentifier() -> String {
@@ -137,6 +138,10 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
     
     public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath)
         -> UITableViewCell.AccessoryType? {
+        if isObjectSelected(object) {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+
         return isObjectSelected(object) ? .checkmark : .none
     }
     
