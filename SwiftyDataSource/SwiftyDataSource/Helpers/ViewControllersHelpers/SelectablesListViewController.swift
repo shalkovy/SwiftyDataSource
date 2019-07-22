@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyDataSource
 
 public protocol SelectablesListDelegate {
     associatedtype T: SelectableEntity

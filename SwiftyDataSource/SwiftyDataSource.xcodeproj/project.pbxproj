@@ -21,6 +21,7 @@
 		B84F3CA521CAFE1600489349 /* DataSourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84F3C8821CAFE1600489349 /* DataSourceViews.swift */; };
 		B84F3CA621CAFE1600489349 /* TableViewDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84F3C8921CAFE1600489349 /* TableViewDataSourceDelegate.swift */; };
 		B84F3CA721CAFE1600489349 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84F3C8A21CAFE1600489349 /* DataSource.swift */; };
+		B8A9FE7622E5D421000E3DDC /* String+digitsOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */; };
 		B8F4AC1D2267869100F85471 /* UITableViewCell+Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC082267869100F85471 /* UITableViewCell+Position.swift */; };
 		B8F4AC1E2267869100F85471 /* UIButton+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC092267869100F85471 /* UIButton+Background.swift */; };
 		B8F4AC1F2267869100F85471 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC0A2267869100F85471 /* CheckBoxButton.swift */; };
@@ -70,6 +71,7 @@
 		B84F3C8821CAFE1600489349 /* DataSourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceViews.swift; sourceTree = "<group>"; };
 		B84F3C8921CAFE1600489349 /* TableViewDataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceDelegate.swift; sourceTree = "<group>"; };
 		B84F3C8A21CAFE1600489349 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+digitsOnly.swift"; sourceTree = "<group>"; };
 		B8F4AC082267869100F85471 /* UITableViewCell+Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Position.swift"; sourceTree = "<group>"; };
 		B8F4AC092267869100F85471 /* UIButton+Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Background.swift"; sourceTree = "<group>"; };
 		B8F4AC0A2267869100F85471 /* CheckBoxButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 		B8F4AC152267869100F85471 /* FoundationExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */,
 				B8F4AC162267869100F85471 /* NSFetchRequest+Sorting.swift */,
 				B8F4AC172267869100F85471 /* Sequence+UniqueElements.swift */,
 				B8F4AC182267869100F85471 /* UserDefaults+Subscript.swift */,
@@ -300,6 +303,7 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 				Base,
 			);
 			mainGroup = 1D7B8F382004D1B100400613;
@@ -370,6 +374,7 @@
 				B8F4AC2A2267869100F85471 /* NSFetchRequest+Sorting.swift in Sources */,
 				B8F4AC202267869100F85471 /* UIImage+String.swift in Sources */,
 				B8F4AC2C2267869100F85471 /* UserDefaults+Subscript.swift in Sources */,
+				B8A9FE7622E5D421000E3DDC /* String+digitsOnly.swift in Sources */,
 				B84F3C8B21CAFE1600489349 /* FRCDataSourceContainer.swift in Sources */,
 				B8F4AC222267869100F85471 /* UIStackView+AddImageView.swift in Sources */,
 				B8F4AC2F2267869100F85471 /* InstantiatableFromStoryboard.swift in Sources */,
