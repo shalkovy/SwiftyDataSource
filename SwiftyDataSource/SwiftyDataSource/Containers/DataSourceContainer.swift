@@ -24,7 +24,7 @@ public class DataSourceContainer<ResultType>: DataSourceContainerProtocol {
 
     // MARK: Delegate
 
-    public var delegate: DataSourceContainerDelegate?
+    public weak var delegate: DataSourceContainerDelegate?
 
     // MARK: Methods for overriding in subclasses
     
@@ -79,7 +79,7 @@ public class DataSourceContainer<ResultType>: DataSourceContainerProtocol {
 
 // MARK: DataSourceContainerDelegate
 
-public protocol DataSourceContainerDelegate {
+public protocol DataSourceContainerDelegate: class {
     
     // MARK: - Optional
 
