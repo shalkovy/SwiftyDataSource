@@ -40,6 +40,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
         didSet {
             tableView?.dataSource = self
             tableView?.delegate = self
+            showNoDataViewIfNeeded()
         }
     }
     
@@ -303,9 +304,9 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 let object = object(at: indexPath) {
                 cell.configure(with: object)
             }
-        default:
-            fatalError()
+        default: fatalError()
         }
+        showNoDataViewIfNeeded()
     }
     
     public func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
@@ -316,8 +317,7 @@ extension TableViewDataSource: DataSourceContainerDelegate {
             tableView?.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
         case .update:
             tableView?.reloadSections(IndexSet(integer: sectionIndex), with: .automatic)
-        default:
-            fatalError()
+        default: fatalError()
         }
     }
     
