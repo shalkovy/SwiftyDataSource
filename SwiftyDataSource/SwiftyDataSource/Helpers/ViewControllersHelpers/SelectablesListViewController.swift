@@ -53,12 +53,14 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     
     public init(container: DataSourceContainer<T>? = nil,
                 selected: [T]? = nil,
-                multiselection: Bool = false) {
+                multiselection: Bool = false,
+                cellUsesCustomSelection: Bool = false) {
         super.init(style: .plain)
         self.container = container
         self.dataSource.container = container
         self.selectedEntries = selected ?? []
         self.multiselection = multiselection
+        self.cellUsesCustomSelection = cellUsesCustomSelection
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -97,13 +99,6 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         super.viewDidAppear(animated)
         selectedEntries.forEach { selectedEntry in
             tableView.selectRow(at: container?.indexPath(for: selectedEntry), animated: false, scrollPosition: .none)
-//            self.container?.search({ (indexPath, entity) -> Bool in
-//                let isSelectable = entity.selectableEntityIsEqual(to: selectedEntry)
-//                if isSelectable {
-//                    tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-//                }
-//                return isSelectable
-//            })
         }
     }
     
@@ -126,6 +121,7 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     // MARK: Private
 
     private var multiselection: Bool = false
+    private var cellUsesCustomSelection: Bool = false
     private var selectedEntries: [T] = []
 }
 
@@ -151,11 +147,12 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
     
     public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath)
         -> UITableViewCell.AccessoryType? {
+        guard cellUsesCustomSelection == false else { return .none }
         return isObjectSelected(object) ? .checkmark : .none
     }
     
     private func isObjectSelected(_ object: T) -> Bool {
-        return selectedEntries.contains(where: { $0.selectableEntityIsEqual(to: object)})
+        return selectedEntries.contains(where: { $0.selectableEntityIsEqual(to: object) })
     }
 }
 
