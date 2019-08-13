@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     func сhildOrSelf<T: UIViewController>(of type: T.Type) -> T? {
         if let viewController = self as? T {
             return viewController
