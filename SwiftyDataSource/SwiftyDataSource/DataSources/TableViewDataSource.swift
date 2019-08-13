@@ -53,7 +53,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     public var footerHeight: CGFloat = 0.01
 
     public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
-    
+
     // MARK: Implementing of datasource methods
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -299,12 +299,11 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 tableView?.deleteRows(at: [indexPath], with: .fade)
             }
         case .update:
-            if let indexPath = indexPath,
-                let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable,
-                let object = object(at: indexPath) {
+            if let indexPath = indexPath, let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable, let object = object(at: indexPath) {
                 cell.configure(with: object)
             }
-        default: fatalError()
+        default:
+            tableView?.reloadData()
         }
         showNoDataViewIfNeeded()
     }
@@ -317,7 +316,8 @@ extension TableViewDataSource: DataSourceContainerDelegate {
             tableView?.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
         case .update:
             tableView?.reloadSections(IndexSet(integer: sectionIndex), with: .automatic)
-        default: fatalError()
+        default:
+            tableView?.reloadData()
         }
     }
     

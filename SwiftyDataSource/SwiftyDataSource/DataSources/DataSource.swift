@@ -25,7 +25,6 @@ public protocol DataSource: DataSourceProtocol {
 
     func numberOfItems(in section: Int) -> Int?
     func object(at indexPath: IndexPath) -> ObjectType?
-//    func indexPath(for object: ObjectType) -> IndexPath?
     func showNoDataViewIfNeeded()
     func setNoDataView(hidden: Bool)
 
@@ -51,10 +50,6 @@ extension DataSource {
         return container?.object(at: indexPath)
     }
     
-//    public func indexPath(for object: ObjectType) -> IndexPath? {
-//        return container?.indexPath(for: object)
-//    }
-
     public func sectionInfo(at index: Int) -> DataSourceSectionInfo? {
         return container?.sections?[index]
     }

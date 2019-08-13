@@ -44,10 +44,11 @@ public class AnyDataSource<T>: DataSourceProtocol {
     func object(at indexPath: IndexPath) -> T? {
         return nil
     }
-    //    func indexPath(for object: ObjectType) -> IndexPath?
+
     func showNoDataViewIfNeeded() {
         
     }
+    
     func setNoDataView(hidden: Bool) {
         
     }

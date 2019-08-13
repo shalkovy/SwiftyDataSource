@@ -8,7 +8,14 @@
 
 import UIKit
 
-public extension UIViewController {
+extension UIViewController {
+    func сhildOrSelf<T: UIViewController>(of type: T.Type) -> T? {
+        if let viewController = self as? T {
+            return viewController
+        }
+        return child(of: T.self)
+    }
+    
     func child<T: UIViewController>(of type: T.Type) -> T? {
         return self.children.filter { $0 is T }.last as? T
     }

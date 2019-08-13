@@ -56,19 +56,7 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
             }
         }
     }
-
-    // NEED INVESTIGATE 
-//    open override func indexPath(for object: ResultType) -> IndexPath? {
-//        for (sectionIndex, section) in arraySections.enumerated() {
-//            for (objectIndex, arrayObject) in section.arrayObjects.enumerated() {
-//                if (object == arrayObject) {
-//                    return IndexPath(row: objectIndex, section: sectionIndex)
-//                }
-//            }
-//        }
-//        return nil
-//    }
-    
+  
     open override func numberOfSections() -> Int? {
         return arraySections.count
     }
