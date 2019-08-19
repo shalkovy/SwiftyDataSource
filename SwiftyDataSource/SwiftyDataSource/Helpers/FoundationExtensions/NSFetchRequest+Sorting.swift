@@ -16,5 +16,11 @@ public extension NSFetchRequest {
         self.sortDescriptors = descriptors
         return self
     }
-    
+
+    @objc
+    func filtered(by predicate: NSPredicate) -> Self {
+        self.predicate = predicate
+        return self
+    }
+
 }
