@@ -50,6 +50,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     public var headerIdentifier: String?
     public var footerIdentifier: String?
     public var headerHeight: CGFloat = 0.01
+    public var removeEmptyHeaders: Bool = true
     public var footerHeight: CGFloat = 0.01
 
     public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
@@ -197,7 +198,15 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     
     // Variable height support
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return UITableView.automaticDimension }
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return headerHeight }
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let length = sectionInfo(at: section)?.name.count
+        if removeEmptyHeaders && length == 0 {
+            return 0.01
+        } else {
+            return headerHeight
+        }
+    }
+    
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return footerHeight }
     
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat { return UITableView.automaticDimension }
