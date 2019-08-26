@@ -15,6 +15,7 @@ public protocol TableViewDataSourceDelegate: class {
     func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: ObjectType, at indexPath: IndexPath) -> String?
     func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: ObjectType, at indexPath: IndexPath) -> UITableViewCell.AccessoryType?
     func dataSource(_ dataSource: DataSourceProtocol, didSelect object: ObjectType, at indexPath: IndexPath)
+    func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: ObjectType, at indexPath: IndexPath?)
 }
 
 // MARK: Default implementation as all of methods are optional
@@ -29,6 +30,7 @@ public extension TableViewDataSourceDelegate {
     }
     
     func dataSource(_ dataSource: DataSourceProtocol, didSelect object: ObjectType, at indexPath: IndexPath) { }
+    func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: ObjectType, at indexPath: IndexPath?) { }
 }
 
 
@@ -39,12 +41,14 @@ public class AnyTableViewDataSourceDelegate<T>: TableViewDataSourceDelegate {
         _dataSourceCellIdentifierForObjectAtIndexPath = delegate.dataSource
         _dataSourceAccessoryTypeForObjectAtIndexPath = delegate.dataSource
         _dataSourceDidSelectObjectAtIndexPath = delegate.dataSource
+        _dataSourceDidDeselectObjectAtIndexPath = delegate.dataSource
     }
 
     private let _dataSourceCellIdentifierForObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> String?
     private let _dataSourceAccessoryTypeForObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> UITableViewCell.AccessoryType?
     private let _dataSourceDidSelectObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> Void
-    
+    private let _dataSourceDidDeselectObjectAtIndexPath: (DataSourceProtocol, T, IndexPath?) -> Void
+
     public func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: T, at indexPath: IndexPath) -> String? {
         return _dataSourceCellIdentifierForObjectAtIndexPath(dataSource, object, indexPath)
     }
@@ -56,4 +60,9 @@ public class AnyTableViewDataSourceDelegate<T>: TableViewDataSourceDelegate {
     public func dataSource(_ dataSource: DataSourceProtocol, didSelect object: T, at indexPath: IndexPath) {
         return _dataSourceDidSelectObjectAtIndexPath(dataSource, object, indexPath)
     }
+
+    public func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: T, at indexPath: IndexPath?) {
+        return _dataSourceDidDeselectObjectAtIndexPath(dataSource, object, indexPath)
+    }
+
 }

@@ -252,7 +252,10 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
         guard let object = object(at: indexPath) else { return }
         self.delegate?.dataSource(self, didSelect: object, at: indexPath)
     }
-    open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) { }
+    open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        guard let object = object(at: indexPath) else { return }
+        self.delegate?.dataSource(self, didDeselect: object, at: indexPath)
+    }
     
     // Editing
     open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle { return .none }

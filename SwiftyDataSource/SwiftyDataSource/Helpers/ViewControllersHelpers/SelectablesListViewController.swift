@@ -142,7 +142,9 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
             delegate?.listDidDeselect(self, object)
         }
         
-        tableView.cellForRow(at: indexPath)?.accessoryType = isObjectSelected(object) ? .checkmark : .none
+        if cellUsesCustomSelection == false {
+            tableView.cellForRow(at: indexPath)?.accessoryType = isObjectSelected(object) ? .checkmark : .none
+        }
     }
     
     public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath)
