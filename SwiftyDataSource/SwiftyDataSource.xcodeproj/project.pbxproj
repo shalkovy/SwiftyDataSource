@@ -22,6 +22,7 @@
 		B84F3CA621CAFE1600489349 /* TableViewDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84F3C8921CAFE1600489349 /* TableViewDataSourceDelegate.swift */; };
 		B84F3CA721CAFE1600489349 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84F3C8A21CAFE1600489349 /* DataSource.swift */; };
 		B8A9FE7622E5D421000E3DDC /* String+digitsOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */; };
+		B8BEC0662315864C0028439E /* FilterableDataSourceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BEC0652315864C0028439E /* FilterableDataSourceContainer.swift */; };
 		B8F4AC1D2267869100F85471 /* UITableViewCell+Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC082267869100F85471 /* UITableViewCell+Position.swift */; };
 		B8F4AC1E2267869100F85471 /* UIButton+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC092267869100F85471 /* UIButton+Background.swift */; };
 		B8F4AC1F2267869100F85471 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC0A2267869100F85471 /* CheckBoxButton.swift */; };
@@ -72,6 +73,7 @@
 		B84F3C8921CAFE1600489349 /* TableViewDataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceDelegate.swift; sourceTree = "<group>"; };
 		B84F3C8A21CAFE1600489349 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+digitsOnly.swift"; sourceTree = "<group>"; };
+		B8BEC0652315864C0028439E /* FilterableDataSourceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterableDataSourceContainer.swift; sourceTree = "<group>"; };
 		B8F4AC082267869100F85471 /* UITableViewCell+Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Position.swift"; sourceTree = "<group>"; };
 		B8F4AC092267869100F85471 /* UIButton+Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Background.swift"; sourceTree = "<group>"; };
 		B8F4AC0A2267869100F85471 /* CheckBoxButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				B84F3C6C21CAFE1600489349 /* FRCDataSourceContainer.swift */,
 				B84F3C6D21CAFE1600489349 /* ArrayDataSourceContainer.swift */,
+				B8BEC0652315864C0028439E /* FilterableDataSourceContainer.swift */,
 				B84F3C6E21CAFE1600489349 /* DataSourceContainer.swift */,
 			);
 			path = Containers;
@@ -369,6 +372,7 @@
 				B84F3CA221CAFE1600489349 /* CollectionViewDataSource.swift in Sources */,
 				B84F3CA721CAFE1600489349 /* DataSource.swift in Sources */,
 				B8F4AC1D2267869100F85471 /* UITableViewCell+Position.swift in Sources */,
+				B8BEC0662315864C0028439E /* FilterableDataSourceContainer.swift in Sources */,
 				B8F4AC242267869100F85471 /* UITableViewCell+Types.swift in Sources */,
 				B8F4AC262267869100F85471 /* UIStackView+RemoveAllSubviews.swift in Sources */,
 				B8F4AC2A2267869100F85471 /* NSFetchRequest+Sorting.swift in Sources */,

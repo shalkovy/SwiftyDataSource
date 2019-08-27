@@ -148,14 +148,6 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
     
     var arraySections = [Section<ResultType>]()
 
-    // MARK: Additional features
-
-    public var sortDescritor: NSSortDescriptor? {
-        didSet {
-            // TODO:
-        }
-    }
-
     // MARK: Array section class
     
     class Section<ResultType>: DataSourceSectionInfo {

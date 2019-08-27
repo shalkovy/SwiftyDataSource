@@ -47,7 +47,7 @@ public protocol SelectableEntity {
     func selectableEntityIsEqual(to: SelectableEntity) -> Bool
 }
 
-open class SelectablesListViewController<T>: UITableViewController where T: SelectableEntity {
+open class SelectablesListViewController<T>: UITableViewController, UISearchBarDelegate where T: SelectableEntity {
 
     // MARK: Public
     
@@ -76,10 +76,18 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     public var delegate: AnySelectablesListDelegate<T>?
     public var didSelectAction: ((T) -> ())?
 
+    open func cellIdentifier() -> String {
+        return SelectablesListCell.defaultReuseIdentifier
+    }
+    
+    open func registerCell() {
+        tableView.registerCellClassForDefaultIdentifier(SelectablesListCell.self)
+    }
+    
+
     // MARK: Actions
     
-    @objc
-    private func done(_ sender: AnyObject) {
+    @objc private func done(_ sender: AnyObject) {
         delegate?.listDidSelect(self, entities: selectedEntries)
     }
     
@@ -93,6 +101,7 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         registerCell()
         dataSource.tableView = tableView
         tableView.allowsMultipleSelection = multiselection
+        tableView.tableHeaderView = searchBar
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -102,18 +111,10 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
         }
     }
     
-    open func cellIdentifier() -> String {
-        return SelectablesListCell.defaultReuseIdentifier
-    }
-
-    open func registerCell() {
-        tableView.registerCellClassForDefaultIdentifier(SelectablesListCell.self)
-    }
-
     // MARK: DataSource
     
     lazy var dataSource: TableViewDataSource<T> = {
-        let dataSource = TableViewDataSource<T>(tableView: nil, cellIdentifier: nil, container: container, delegate: AnyTableViewDataSourceDelegate(self))
+        let dataSource = TableViewDataSource<T>(container: container, delegate: AnyTableViewDataSourceDelegate(self))
         dataSource.cellIdentifier = cellIdentifier()
         return dataSource
     }()
@@ -123,6 +124,31 @@ open class SelectablesListViewController<T>: UITableViewController where T: Sele
     private var multiselection: Bool = false
     private var cellUsesCustomSelection: Bool = false
     private var selectedEntries: [T] = []
+    private var allowTextSearch: Bool {
+        return container is FilterableDataSourceContainer<T>
+    }
+    
+    public var searchBar: UISearchBar? {
+        if let searchBar = tableView.tableHeaderView as? UISearchBar {
+            return searchBar
+        }
+        if allowTextSearch == false {
+            return nil
+        }
+        
+        let searchBar: UISearchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.searchBarStyle = UISearchBar.Style.minimal
+        searchBar.placeholder = NSLocalizedString("SEARCH", comment: "")
+        searchBar.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
+        return searchBar
+    }
+
+    @objc public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        (container as? FilterableDataSourceContainer)?.searchText = searchText
+        tableView.reloadData()
+    }
+    
 }
 
 extension SelectablesListViewController: TableViewDataSourceDelegate {
