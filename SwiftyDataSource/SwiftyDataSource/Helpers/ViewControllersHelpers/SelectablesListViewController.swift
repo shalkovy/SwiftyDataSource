@@ -106,7 +106,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
     }
 
     @objc public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        (container as? FilterableDataSourceContainer)?.searchText = searchText
+        (container as? FilterableDataSourceContainer)?.filterData(by: searchText)
         tableView.reloadData()
     }
     
