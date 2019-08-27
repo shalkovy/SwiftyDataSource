@@ -23,6 +23,8 @@
 		B84F3CA721CAFE1600489349 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84F3C8A21CAFE1600489349 /* DataSource.swift */; };
 		B8A9FE7622E5D421000E3DDC /* String+digitsOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */; };
 		B8BEC0662315864C0028439E /* FilterableDataSourceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BEC0652315864C0028439E /* FilterableDataSourceContainer.swift */; };
+		B8BEC06823158F8C0028439E /* SelectableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BEC06723158F8C0028439E /* SelectableEntity.swift */; };
+		B8BEC06A23158FBC0028439E /* SelectablesListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BEC06923158FBC0028439E /* SelectablesListDelegate.swift */; };
 		B8F4AC1D2267869100F85471 /* UITableViewCell+Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC082267869100F85471 /* UITableViewCell+Position.swift */; };
 		B8F4AC1E2267869100F85471 /* UIButton+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC092267869100F85471 /* UIButton+Background.swift */; };
 		B8F4AC1F2267869100F85471 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC0A2267869100F85471 /* CheckBoxButton.swift */; };
@@ -74,6 +76,8 @@
 		B84F3C8A21CAFE1600489349 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		B8A9FE7522E5D421000E3DDC /* String+digitsOnly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+digitsOnly.swift"; sourceTree = "<group>"; };
 		B8BEC0652315864C0028439E /* FilterableDataSourceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterableDataSourceContainer.swift; sourceTree = "<group>"; };
+		B8BEC06723158F8C0028439E /* SelectableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableEntity.swift; sourceTree = "<group>"; };
+		B8BEC06923158FBC0028439E /* SelectablesListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectablesListDelegate.swift; sourceTree = "<group>"; };
 		B8F4AC082267869100F85471 /* UITableViewCell+Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Position.swift"; sourceTree = "<group>"; };
 		B8F4AC092267869100F85471 /* UIButton+Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Background.swift"; sourceTree = "<group>"; };
 		B8F4AC0A2267869100F85471 /* CheckBoxButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				B8F4AC1B2267869100F85471 /* SelectablesListViewController.swift */,
+				B8BEC06923158FBC0028439E /* SelectablesListDelegate.swift */,
+				B8BEC06723158F8C0028439E /* SelectableEntity.swift */,
 				B8F4AC1C2267869100F85471 /* InstantiatableFromStoryboard.swift */,
 			);
 			path = ViewControllersHelpers;
@@ -352,12 +358,14 @@
 			files = (
 				B8F4AC212267869100F85471 /* UIResponder+Additions.swift in Sources */,
 				B84F3CA421CAFE1600489349 /* MapViewDataSource.swift in Sources */,
+				B8BEC06A23158FBC0028439E /* SelectablesListDelegate.swift in Sources */,
 				B84F3C8D21CAFE1600489349 /* DataSourceContainer.swift in Sources */,
 				B84F3C8C21CAFE1600489349 /* ArrayDataSourceContainer.swift in Sources */,
 				B8F4AC2E2267869100F85471 /* SelectablesListViewController.swift in Sources */,
 				B8F4AC252267869100F85471 /* UIControl+EnabledMarkedly.swift in Sources */,
 				B84F3CA621CAFE1600489349 /* TableViewDataSourceDelegate.swift in Sources */,
 				B8F4AC1F2267869100F85471 /* CheckBoxButton.swift in Sources */,
+				B8BEC06823158F8C0028439E /* SelectableEntity.swift in Sources */,
 				B8F4AC292267869100F85471 /* UITableView+ReuseIdentifiers.swift in Sources */,
 				B84F3CA321CAFE1600489349 /* TableViewDataSource.swift in Sources */,
 				B81D742622402FD300707EA2 /* MapViewDataSourceDelegate.swift in Sources */,
