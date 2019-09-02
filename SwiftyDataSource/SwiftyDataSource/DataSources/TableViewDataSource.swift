@@ -311,8 +311,8 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 tableView?.deleteRows(at: [indexPath], with: .fade)
             }
         case .update:
-            if let indexPath = indexPath, let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable, let object = object(at: indexPath) {
-                cell.configure(with: object)
+            if let indexPath = indexPath {
+                tableView?.reloadRows(at: [indexPath], with: .fade)
             }
         default:
             tableView?.reloadData()
