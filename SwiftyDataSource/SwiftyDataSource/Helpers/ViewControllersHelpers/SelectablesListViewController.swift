@@ -122,26 +122,19 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
         if index == nil {
             didSelectAction?(object)
             selectedEntries.append(object)
-        } else if multiselection, let indexExp = index {
-            selectedEntries.remove(at: indexExp)
         }
 
         // No need to call delegate didSelect: if multiselection is enabled
-        if !multiselection || isObjectSelected(object) {
+        if isObjectSelected(object) {
             delegate?.listDidSelect(self, object)
-        } else {
-            delegate?.listDidDeselect(self, object)
-        }
-        
-        if cellUsesCustomSelection == false {
-            tableView.cellForRow(at: indexPath)?.accessoryType = isObjectSelected(object) ? .checkmark : .none
         }
     }
     
-    public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath)
-        -> UITableViewCell.AccessoryType? {
-        guard cellUsesCustomSelection == false else { return .none }
-        return isObjectSelected(object) ? .checkmark : .none
+    public func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: T, at indexPath: IndexPath?) {
+        if let index = selectedEntries.firstIndex(where: { $0.selectableEntityIsEqual(to: object)}) {
+            selectedEntries.remove(at: index)
+            delegate?.listDidDeselect(self, object)
+        }
     }
     
     private func isObjectSelected(_ object: T) -> Bool {
