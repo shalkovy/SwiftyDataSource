@@ -67,8 +67,12 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        selectedEntries.forEach { selectedEntry in
-            tableView.selectRow(at: container?.indexPath(for: selectedEntry), animated: false, scrollPosition: .none)
+        selectedEntries.forEach { entry in
+            container?.search({ (indexPath, entity) -> Bool in
+                let selected = entity.selectableEntityIsEqual(to: entry)
+                if selected { tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)}
+                return selected
+            })
         }
     }
     

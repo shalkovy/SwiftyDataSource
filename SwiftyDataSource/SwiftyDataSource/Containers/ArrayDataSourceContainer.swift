@@ -56,7 +56,11 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
             }
         }
     }
-  
+
+    open override func indexPath(for object: ResultType) -> IndexPath? {
+        fatalError("Array data source does not suuport indexPath(for:). Use search method instead")
+    }
+    
     open override func numberOfSections() -> Int? {
         return arraySections.count
     }
