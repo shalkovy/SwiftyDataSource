@@ -12,7 +12,7 @@ public class UIDocumentInteractionControllerPresenter: NSObject, UIDocumentInter
     
     private static let defaultPresenter = UIDocumentInteractionControllerPresenter()
     
-    static func showDocumentInteractionController(for url: URL, from viewController: UIViewController) {
+    public static func showDocumentInteractionController(for url: URL, from viewController: UIViewController) {
         defaultPresenter.viewControllerForPreview = viewController
         defaultPresenter.documentInteractionController.url = url
         defaultPresenter.documentInteractionController.presentPreview(animated: true)
