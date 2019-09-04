@@ -6,7 +6,7 @@
 //  Copyright © 2019 EffectiveSoft. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public class UIDocumentInteractionControllerPresenter: NSObject, UIDocumentInteractionControllerDelegate {
     

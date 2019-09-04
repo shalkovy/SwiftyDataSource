@@ -99,14 +99,18 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
 
     public func replace(object: ResultType, at indexPath: IndexPath) throws {
         let arraySection = arraySections[safe: indexPath.section]
-        guard indexPath.row <= arraySection?.arrayObjects.count ?? 0 else {
-            throw ArrayDataSourceContainerError.NonValidIndexPathInsertion
-        }
         guard let section = arraySection else {
             try insert(sectionObjects: [object], at: indexPath.section)
             return
         }
-        
+        guard indexPath.row < section.arrayObjects.count else {
+            try insert(object: object, at: indexPath)
+            return
+        }
+        guard indexPath.row <= section.arrayObjects.count else {
+            throw ArrayDataSourceContainerError.NonValidIndexPathInsertion
+        }
+
         section.replace(object: object, at: indexPath.row)
         delegate?.container(self, didChange: object, at: indexPath, for: .update, newIndexPath: nil)
     }
