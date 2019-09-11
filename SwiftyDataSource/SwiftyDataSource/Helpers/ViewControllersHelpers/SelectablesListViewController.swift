@@ -36,6 +36,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
     
     public var delegate: AnySelectablesListDelegate<T>?
     public var didSelectAction: ((T) -> ())?
+    public var didSelectMultiAction: (([T]) -> ())?
 
     open func cellIdentifier() -> String {
         return SelectablesListCell.defaultReuseIdentifier
@@ -49,6 +50,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
     // MARK: Actions
     
     @objc private func done(_ sender: AnyObject) {
+        didSelectMultiAction?(selectedEntries)
         delegate?.listDidSelect(self, entities: selectedEntries)
     }
     
