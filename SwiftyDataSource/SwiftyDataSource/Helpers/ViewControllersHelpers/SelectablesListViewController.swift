@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class SelectablesListViewController<T>: UITableViewController, UISearchBarDelegate where T: SelectableEntity {
+open class SelectablesListViewController<T>: UITableViewController, UISearchResultsUpdating where T: SelectableEntity {
 
     // MARK: Public
     
@@ -58,24 +58,22 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.allowsMultipleSelection = multiselection
+        registerCell()
+
         if multiselection {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done(_:)))
         }
-        registerCell()
+        if container is FilterableDataSourceContainer {
+            navigationItem.searchController = searchController
+        }
+
         dataSource.tableView = tableView
-        tableView.allowsMultipleSelection = multiselection
-        tableView.tableHeaderView = searchBar
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        selectedEntries.forEach { entry in
-            container?.search({ (indexPath, entity) -> Bool in
-                let selected = entity.selectableEntityIsEqual(to: entry)
-                if selected { tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)}
-                return selected
-            })
-        }
+        selectRowsForSelectedEntries()
     }
     
     // MARK: DataSource
@@ -86,6 +84,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
         return dataSource
     }()
     
+    
     // MARK: Private
 
     private var multiselection: Bool = false
@@ -95,27 +94,40 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchBarD
         return container is FilterableDataSourceContainer<T>
     }
     
-    public var searchBar: UISearchBar? {
-        if let searchBar = tableView.tableHeaderView as? UISearchBar {
-            return searchBar
+    public lazy var searchController: UISearchController? = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = NSLocalizedString("FIND", comment: "")
+        searchController.searchBar.setImage(UIImage(named: "searchbar-icon"), for: UISearchBar.Icon.search, state: .normal)
+        searchController.searchBar.barStyle = .black
+        searchController.searchBar.tintColor = .white
+        return searchController
+    }()
+
+    fileprivate func selectRowsForSelectedEntries() {
+        selectedEntries.forEach { entry in
+            for section in 0..<tableView.numberOfSections {
+                for row in 0..<tableView.numberOfRows(inSection: section) {
+                    let indexPath = IndexPath(row: row, section: section)
+                    let entity = (tableView.cellForRow(at: indexPath) as? SelectablesListCell)?.entity
+                    let selected = entity?.selectableEntityIsEqual(to: entry) == true
+                    if selected {
+                        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                    }
+                }
+            }
         }
-        if allowTextSearch == false {
-            return nil
-        }
-        
-        let searchBar: UISearchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.searchBarStyle = UISearchBar.Style.minimal
-        searchBar.placeholder = NSLocalizedString("SEARCH", comment: "")
-        searchBar.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
-        return searchBar
     }
 
-    @objc public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        (container as? FilterableDataSourceContainer)?.filterData(by: searchText)
-        tableView.reloadData()
-    }
+    // MARK: UISearchResultsUpdating
     
+    public func updateSearchResults(for searchController: UISearchController) {
+        (container as? FilterableDataSourceContainer)?.filterData(by: searchController.searchBar.text)
+        tableView.reloadData()
+        selectRowsForSelectedEntries()
+    }
+
 }
 
 extension SelectablesListViewController: TableViewDataSourceDelegate {
@@ -172,7 +184,7 @@ open class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
         self.entity = object as? SelectableEntity
     }
     
-    private var entity: SelectableEntity? {
+    public var entity: SelectableEntity? {
         didSet {
             label.attributedText = entity?.selectableEntityDescription
         }
