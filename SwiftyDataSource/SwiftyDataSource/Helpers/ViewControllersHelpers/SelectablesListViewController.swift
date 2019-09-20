@@ -65,7 +65,9 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchResu
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done(_:)))
         }
         if container is FilterableDataSourceContainer {
+            definesPresentationContext = true
             navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
         }
 
         dataSource.tableView = tableView
@@ -102,6 +104,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchResu
         searchController.searchBar.setImage(UIImage(named: "searchbar-icon"), for: UISearchBar.Icon.search, state: .normal)
         searchController.searchBar.barStyle = .black
         searchController.searchBar.tintColor = .white
+        
         return searchController
     }()
 
@@ -158,8 +161,6 @@ extension SelectablesListViewController: TableViewDataSourceDelegate {
 
 open class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
     
-    public let label = UILabel()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -170,9 +171,14 @@ open class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
         setup()
     }
 
-    private func setup() {
+    public let label: UILabel = {
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        return label
+    }()
+
+    open func setup() {
         contentView.addSubview(label)
         label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15).isActive = true
         label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 15).isActive = true
@@ -184,7 +190,7 @@ open class SelectablesListCell: UITableViewCell, DataSourceConfigurable {
         self.entity = object as? SelectableEntity
     }
     
-    public var entity: SelectableEntity? {
+    open var entity: SelectableEntity? {
         didSet {
             label.attributedText = entity?.selectableEntityDescription
         }
