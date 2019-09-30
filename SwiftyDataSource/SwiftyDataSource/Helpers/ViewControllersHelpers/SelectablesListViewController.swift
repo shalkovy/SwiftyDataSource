@@ -125,7 +125,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchResu
 
     // MARK: UISearchResultsUpdating
     
-    public func updateSearchResults(for searchController: UISearchController) {
+    open func updateSearchResults(for searchController: UISearchController) {
         (container as? FilterableDataSourceContainer)?.filterData(by: searchController.searchBar.text)
         tableView.reloadData()
         selectRowsForSelectedEntries()
