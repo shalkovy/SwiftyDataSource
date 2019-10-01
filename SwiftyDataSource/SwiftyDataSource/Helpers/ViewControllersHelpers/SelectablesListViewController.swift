@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class SelectablesListViewController<T>: UITableViewController, UISearchResultsUpdating where T: SelectableEntity {
+open class SelectablesListViewController<T>: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate where T: SelectableEntity {
 
     // MARK: Public
     
@@ -98,15 +98,17 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchResu
     
     public lazy var searchController: UISearchController? = {
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = NSLocalizedString("FIND", comment: "")
-        searchController.searchBar.setImage(UIImage(named: "searchbar-icon"), for: UISearchBar.Icon.search, state: .normal)
-        searchController.searchBar.barStyle = .black
-        searchController.searchBar.tintColor = .white
-        
+        searchController.searchBar.setImage(UIImage(named: "searchbar-icon"), for: .search, state: .normal)
+        searchController.searchBar.delegate = self
+        searchController.searchBar.showsCancelButton = false
+        searchController.searchBar.showsSearchResultsButton = true
         return searchController
     }()
+
 
     fileprivate func selectRowsForSelectedEntries() {
         selectedEntries.forEach { entry in
@@ -131,6 +133,15 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchResu
         selectRowsForSelectedEntries()
     }
 
+    // MARK: UISearchResultsUpdating
+
+    open func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController?.searchBar.endEditing(true)
+    }
+    
+    public func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
+        searchController?.searchBar.endEditing(true)
+    }
 }
 
 extension SelectablesListViewController: TableViewDataSourceDelegate {
