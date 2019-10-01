@@ -97,7 +97,7 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         delegate?.container(self, didChange: object, at: indexPath, for: .delete, newIndexPath: nil)
     }
 
-    public func replace(object: ResultType, at indexPath: IndexPath) throws {
+    public func replace(object: ResultType, at indexPath: IndexPath, reloadAction: Bool = false) throws {
         let arraySection = arraySections[safe: indexPath.section]
         guard let section = arraySection else {
             try insert(sectionObjects: [object], at: indexPath.section)
@@ -112,7 +112,8 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         }
 
         section.replace(object: object, at: indexPath.row)
-        delegate?.container(self, didChange: object, at: indexPath, for: .update, newIndexPath: nil)
+        
+        delegate?.container(self, didChange: object, at: indexPath, for: reloadAction ? .reload : .update, newIndexPath: nil)
     }
 
     public func insert(sectionObjects: [ResultType], at sectionIndex: Int = 0, named name: String = "", indexTitle: String? = nil) throws {

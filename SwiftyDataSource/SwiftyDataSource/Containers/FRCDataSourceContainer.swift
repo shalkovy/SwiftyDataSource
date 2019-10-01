@@ -106,7 +106,7 @@ class CoreDataDelegateForwarder<ResultType: NSFetchRequestResult>: NSObject, NSF
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
         guard let container = container else { return }
-        delegate?.container(container, didChange: anObject, at: indexPath, for: type, newIndexPath: newIndexPath)
+        delegate?.container(container, didChange: anObject, at: indexPath, for: DataSourceObjectChangeType.fromFRCChangeType(type), newIndexPath: newIndexPath)
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -114,7 +114,7 @@ class CoreDataDelegateForwarder<ResultType: NSFetchRequestResult>: NSObject, NSF
                     atSectionIndex sectionIndex: Int,
                     for type: NSFetchedResultsChangeType) {
         guard let container = container else { return }
-        delegate?.container(container, didChange: sectionInfo, atSectionIndex: sectionIndex, for: type)
+        delegate?.container(container, didChange: sectionInfo, atSectionIndex: sectionIndex, for: DataSourceObjectChangeType.fromFRCChangeType(type))
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

@@ -303,18 +303,26 @@ extension TableViewDataSource: DataSourceContainerDelegate {
     public func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
         switch (type) {
         case .insert:
-            if let indexPath = newIndexPath {
-                tableView?.insertRows(at: [indexPath], with: .fade)
+            if let newIndexPath = newIndexPath {
+                tableView?.insertRows(at: [newIndexPath], with: .fade)
             }
         case .delete:
             if let indexPath = indexPath {
                 tableView?.deleteRows(at: [indexPath], with: .fade)
             }
+        case .move:
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                tableView?.moveRow(at: indexPath, to: newIndexPath)
+            }
         case .update:
+            if let indexPath = indexPath, let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable, let object = object(at: indexPath) {
+                cell.configure(with: object)
+            }
+        case .reload:
             if let indexPath = indexPath {
                 tableView?.reloadRows(at: [indexPath], with: .fade)
             }
-        default:
+        case .reloadAll:
             tableView?.reloadData()
         }
         showNoDataViewIfNeeded()

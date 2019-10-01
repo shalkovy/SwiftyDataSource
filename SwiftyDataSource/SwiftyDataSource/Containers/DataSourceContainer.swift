@@ -10,7 +10,25 @@ import Foundation
 import CoreData
 
 public typealias DataSourceSectionInfo = NSFetchedResultsSectionInfo
-public typealias DataSourceObjectChangeType = NSFetchedResultsChangeType
+
+public enum DataSourceObjectChangeType {
+    case insert
+    case delete
+    case move
+    case update
+    case reload
+    case reloadAll
+
+    static func fromFRCChangeType(_ type: NSFetchedResultsChangeType) -> DataSourceObjectChangeType {
+        switch type {
+        case .insert:   return .insert
+        case .delete:   return .delete
+        case .move:     return .move
+        case .update:   return .update
+        default:        return .reloadAll
+        }
+    }
+}
 
 public protocol DataSourceContainerProtocol { }
 
