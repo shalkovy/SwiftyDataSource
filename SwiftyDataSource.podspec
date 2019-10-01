@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "launchOptions" => "ai.bakhtin@gmail.com" }
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.0'
 
   s.source       = { :git => "https://github.com/abakhtin/SwiftyDataSource" }
 
