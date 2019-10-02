@@ -133,7 +133,7 @@ open class SelectablesListViewController<T>: UITableViewController, UISearchResu
         selectRowsForSelectedEntries()
     }
 
-    // MARK: UISearchResultsUpdating
+    // MARK: UISearchBarDelegate
 
     open func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController?.searchBar.endEditing(true)
