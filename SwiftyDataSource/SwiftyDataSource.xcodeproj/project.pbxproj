@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043833F1235610E900E947B5 /* UIFont+Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043833F0235610E900E947B5 /* UIFont+Traits.swift */; };
 		1D1F7FC82024872F006B87D8 /* SwiftyDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1F7FC72024872F006B87D8 /* SwiftyDataSourceTests.swift */; };
 		1D1F7FCA2024872F006B87D8 /* SwiftyDataSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7B8F422004D1B100400613 /* SwiftyDataSource.framework */; };
 		1D7B8F472004D1B100400613 /* SwiftyDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7B8F452004D1B100400613 /* SwiftyDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		043833F0235610E900E947B5 /* UIFont+Traits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Traits.swift"; sourceTree = "<group>"; };
 		1D1F7FC52024872F006B87D8 /* SwiftyDataSourceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyDataSourceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1F7FC72024872F006B87D8 /* SwiftyDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyDataSourceTests.swift; sourceTree = "<group>"; };
 		1D1F7FC92024872F006B87D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				B8F4AC122267869100F85471 /* UIView+Corners.swift */,
 				B8F4AC132267869100F85471 /* UIViewController+Childs.swift */,
 				B8F4AC142267869100F85471 /* UITableView+ReuseIdentifiers.swift */,
+				043833F0235610E900E947B5 /* UIFont+Traits.swift */,
 			);
 			path = UIKitExtensions;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				B8F4AC2C2267869100F85471 /* UserDefaults+Subscript.swift in Sources */,
 				B8A9FE7622E5D421000E3DDC /* String+digitsOnly.swift in Sources */,
 				B84F3C8B21CAFE1600489349 /* FRCDataSourceContainer.swift in Sources */,
+				043833F1235610E900E947B5 /* UIFont+Traits.swift in Sources */,
 				B8F4AC222267869100F85471 /* UIStackView+AddImageView.swift in Sources */,
 				B8F4AC2F2267869100F85471 /* InstantiatableFromStoryboard.swift in Sources */,
 			);
