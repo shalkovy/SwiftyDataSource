@@ -325,7 +325,6 @@ extension TableViewDataSource: DataSourceContainerDelegate {
         case .reloadAll:
             tableView?.reloadData()
         }
-        showNoDataViewIfNeeded()
     }
     
     public func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
@@ -347,6 +346,7 @@ extension TableViewDataSource: DataSourceContainerDelegate {
     
     public func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
         tableView?.endUpdates()
+        showNoDataViewIfNeeded()
     }
     
 }
