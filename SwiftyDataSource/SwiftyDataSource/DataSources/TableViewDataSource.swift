@@ -53,7 +53,7 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     public var removeEmptyHeaders: Bool = true
     public var footerHeight: CGFloat = 0.01
 
-    public var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
+    public weak var delegate: AnyTableViewDataSourceDelegate<ObjectType>?
 
     // MARK: Implementing of datasource methods
     
