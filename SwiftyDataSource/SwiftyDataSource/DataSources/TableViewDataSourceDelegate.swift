@@ -38,31 +38,32 @@ public extension TableViewDataSourceDelegate {
 
 public class AnyTableViewDataSourceDelegate<T>: TableViewDataSourceDelegate {
     public required init<U: TableViewDataSourceDelegate>(_ delegate: U) where U.ObjectType == T {
-        _dataSourceCellIdentifierForObjectAtIndexPath = delegate.dataSource
-        _dataSourceAccessoryTypeForObjectAtIndexPath = delegate.dataSource
-        _dataSourceDidSelectObjectAtIndexPath = delegate.dataSource
-        _dataSourceDidDeselectObjectAtIndexPath = delegate.dataSource
+        weak var weakDelegate = delegate
+        _dataSourceCellIdentifierForObjectAtIndexPath = weakDelegate?.dataSource
+        _dataSourceAccessoryTypeForObjectAtIndexPath = weakDelegate?.dataSource
+        _dataSourceDidSelectObjectAtIndexPath = weakDelegate?.dataSource
+        _dataSourceDidDeselectObjectAtIndexPath = weakDelegate?.dataSource
     }
 
-    private let _dataSourceCellIdentifierForObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> String?
-    private let _dataSourceAccessoryTypeForObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> UITableViewCell.AccessoryType?
-    private let _dataSourceDidSelectObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> Void
-    private let _dataSourceDidDeselectObjectAtIndexPath: (DataSourceProtocol, T, IndexPath?) -> Void
+    private let _dataSourceCellIdentifierForObjectAtIndexPath: ((DataSourceProtocol, T, IndexPath) -> String?)?
+    private let _dataSourceAccessoryTypeForObjectAtIndexPath: ((DataSourceProtocol, T, IndexPath) -> UITableViewCell.AccessoryType?)?
+    private let _dataSourceDidSelectObjectAtIndexPath: ((DataSourceProtocol, T, IndexPath) -> Void)?
+    private let _dataSourceDidDeselectObjectAtIndexPath: ((DataSourceProtocol, T, IndexPath?) -> Void)?
 
     public func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: T, at indexPath: IndexPath) -> String? {
-        return _dataSourceCellIdentifierForObjectAtIndexPath(dataSource, object, indexPath)
+        return _dataSourceCellIdentifierForObjectAtIndexPath?(dataSource, object, indexPath)
     }
     
     public func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: T, at indexPath: IndexPath) -> UITableViewCell.AccessoryType? {
-        return _dataSourceAccessoryTypeForObjectAtIndexPath(dataSource, object, indexPath)
+        return _dataSourceAccessoryTypeForObjectAtIndexPath?(dataSource, object, indexPath)
     }
     
     public func dataSource(_ dataSource: DataSourceProtocol, didSelect object: T, at indexPath: IndexPath) {
-        return _dataSourceDidSelectObjectAtIndexPath(dataSource, object, indexPath)
+        return _dataSourceDidSelectObjectAtIndexPath?(dataSource, object, indexPath) ?? ()
     }
 
     public func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: T, at indexPath: IndexPath?) {
-        return _dataSourceDidDeselectObjectAtIndexPath(dataSource, object, indexPath)
+        return _dataSourceDidDeselectObjectAtIndexPath?(dataSource, object, indexPath) ?? ()
     }
 
 }
