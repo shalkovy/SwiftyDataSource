@@ -92,7 +92,7 @@ public class FRCDataSourceContainer<ResultType: NSFetchRequestResult>: DataSourc
 
 class CoreDataDelegateForwarder<ResultType: NSFetchRequestResult>: NSObject, NSFetchedResultsControllerDelegate {
     
-    var delegate: DataSourceContainerDelegate?
+    weak var delegate: DataSourceContainerDelegate?
     weak var container: FRCDataSourceContainer<ResultType>?
     
     init(delegate: DataSourceContainerDelegate? = nil, container: FRCDataSourceContainer<ResultType>? = nil) {
