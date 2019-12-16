@@ -8,23 +8,13 @@
 
 import UIKit
 
-public protocol CollectionViewDataSourceDelegate: class {
-    func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: Any, at indexPath: IndexPath) -> String?
-}
-
-public extension CollectionViewDataSourceDelegate {
-    func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: Any, at indexPath: IndexPath) -> String? {
-        return nil
-    }
-}
-
 open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollectionViewDataSource, UICollectionViewDelegate {
     
     // MARK: Initializer
     
     public init(collectionView: UICollectionView? = nil,
                 container: DataSourceContainer<ObjectType>? = nil,
-                delegate: CollectionViewDataSourceDelegate? = nil,
+                delegate: AnyCollectionViewDataSourceDelegate<ObjectType>? = nil,
                 cellIdentifier: String? = nil) {
         self.collectionView = collectionView
         self.delegate = delegate
@@ -56,7 +46,7 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
         }
     }
     
-    public weak var delegate: CollectionViewDataSourceDelegate?
+    public var delegate: AnyCollectionViewDataSourceDelegate<ObjectType>?
 
     // MARK: Implementing of datasource methods
     
@@ -103,6 +93,17 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
 
     public func invertExpanding(at indexPath: IndexPath) {
         fatalError("Not implemented")
+    }
+    
+    // MARK: Selection
+    
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let object = object(at: indexPath) else { return }
+        self.delegate?.dataSource(self, didSelect: object, at: indexPath)
+    }
+    open func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let object = object(at: indexPath) else { return }
+        self.delegate?.dataSource(self, didSelect: object, at: indexPath)
     }
 }
 
