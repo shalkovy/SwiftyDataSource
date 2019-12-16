@@ -28,7 +28,7 @@ public extension UICollectionView {
         register(cellClass, forCellWithReuseIdentifier: T.defaultReuseIdentifier)
     }
     
-    func registerCellNibForDefaultIdentifier<T>(_ cellClass: T.Type) where T: UITableViewCell {
+    func registerCellNibForDefaultIdentifier<T>(_ cellClass: T.Type) where T: UICollectionViewCell {
         register(UINib(nibName: T.defaultReuseIdentifier, bundle: nil), forCellWithReuseIdentifier: T.defaultReuseIdentifier)
     }
 }
