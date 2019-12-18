@@ -319,8 +319,8 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 cell.configure(with: object)
             }
         case .reload:
-            if let indexPath = indexPath {
-                tableView?.reloadRows(at: [indexPath], with: .fade)
+            if let newIndexPath = newIndexPath {
+                tableView?.reloadRows(at: [newIndexPath], with: .fade)
             }
         case .reloadAll:
             tableView?.reloadData()
