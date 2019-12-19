@@ -311,8 +311,11 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 tableView?.deleteRows(at: [indexPath], with: .fade)
             }
         case .move:
-            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+            if let indexPath = indexPath, let newIndexPath = newIndexPath, indexPath != newIndexPath {
                 tableView?.moveRow(at: indexPath, to: newIndexPath)
+            }
+            if let indexPath = indexPath {
+                tableView?.reloadRows(at: [indexPath], with: .automatic)
             }
         case .update:
             if let indexPath = indexPath, let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable, let object = object(at: indexPath) {
