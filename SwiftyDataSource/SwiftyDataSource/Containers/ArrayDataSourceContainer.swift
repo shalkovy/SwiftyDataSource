@@ -113,7 +113,7 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
 
         section.replace(object: object, at: indexPath.row)
         
-        delegate?.container(self, didChange: object, at: indexPath, for: reloadAction ? .reload : .update, newIndexPath: nil)
+        delegate?.container(self, didChange: object, at: indexPath, for: reloadAction ? .reload : .update, newIndexPath: indexPath)
     }
 
     public func insert(sectionObjects: [ResultType], at sectionIndex: Int = 0, named name: String = "", indexTitle: String? = nil) throws {
