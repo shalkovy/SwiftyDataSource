@@ -23,7 +23,7 @@ public enum DataSourceObjectChangeType {
         switch type {
         case .insert:   return .insert
         case .delete:   return .delete
-        case .move:     return .move
+        case .move:     return .reloadAll
         // WORKAROUND FOR COREDATA UPDATE CHANGE TYPE AS IT CAUSSES DUPLICATION
         // FOR SOME UNKNOWN REASON
         case .update:   return .reload
