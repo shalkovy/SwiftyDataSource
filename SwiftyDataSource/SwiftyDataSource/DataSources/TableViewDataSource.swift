@@ -301,6 +301,7 @@ extension TableViewDataSource: DataSourceContainerDelegate {
     }
     
     public func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
+        print("\(self) \(type) \(String(describing: indexPath)) \(String(describing: newIndexPath))")
         switch (type) {
         case .insert:
             if let newIndexPath = newIndexPath {
@@ -311,8 +312,12 @@ extension TableViewDataSource: DataSourceContainerDelegate {
                 tableView?.deleteRows(at: [indexPath], with: .fade)
             }
         case .move:
-            if let indexPath = indexPath, let newIndexPath = newIndexPath {
-                tableView?.moveRow(at: indexPath, to: newIndexPath)
+            if let indexPath = indexPath, let newIndexPath = newIndexPath, indexPath != newIndexPath {
+                tableView?.deleteRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                tableView?.insertRows(at: [newIndexPath], with: UITableView.RowAnimation.none)
+            }
+            if let indexPath = indexPath {
+                tableView?.reloadRows(at: [indexPath], with: .automatic)
             }
         case .update:
             if let indexPath = indexPath, let cell = tableView?.cellForRow(at: indexPath) as? DataSourceConfigurable, let object = object(at: indexPath) {
