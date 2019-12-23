@@ -29,6 +29,7 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
     
     public var container: DataSourceContainer<ObjectType>? {
         didSet {
+            container?.delegate = self
             collectionView?.reloadData()
         }
     }
@@ -105,5 +106,44 @@ open class CollectionViewDataSource<ObjectType>: NSObject, DataSource, UICollect
         guard let object = object(at: indexPath) else { return }
         self.delegate?.dataSource(self, didSelect: object, at: indexPath)
     }
+}
+
+extension CollectionViewDataSource: DataSourceContainerDelegate {
+    public func containerWillChangeContent(_ container: DataSourceContainerProtocol) {
+        collectionView?.performBatchUpdates(nil, completion: nil)
+    }
+    
+    public func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                collectionView?.insertItems(at: [newIndexPath])
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                collectionView?.deleteItems(at: [indexPath])
+            }
+        case .move:
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                collectionView?.moveItem(at: indexPath, to: newIndexPath)
+            }
+        case .update:
+            if let indexPath = indexPath, let cell = collectionView?.cellForItem(at: indexPath) as? DataSourceConfigurable, let object = object(at: indexPath) {
+                cell.configure(with: object)
+            }
+          
+        case .reload:
+            if let indexPath = indexPath {
+                collectionView?.reloadItems(at: [indexPath])
+            }
+        case .reloadAll:
+            collectionView?.reloadData()
+        }
+    }
+    
+    public func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
+        showNoDataViewIfNeeded()
+    }
+  
 }
 
