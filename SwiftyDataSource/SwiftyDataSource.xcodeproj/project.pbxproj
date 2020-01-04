@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		043833F1235610E900E947B5 /* UIFont+Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043833F0235610E900E947B5 /* UIFont+Traits.swift */; };
+		0485C6FD23C0BD7C0054D123 /* CoreDataContextObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0485C6FC23C0BD7C0054D123 /* CoreDataContextObserver.swift */; };
 		1D1F7FC82024872F006B87D8 /* SwiftyDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1F7FC72024872F006B87D8 /* SwiftyDataSourceTests.swift */; };
 		1D1F7FCA2024872F006B87D8 /* SwiftyDataSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7B8F422004D1B100400613 /* SwiftyDataSource.framework */; };
 		1D7B8F472004D1B100400613 /* SwiftyDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7B8F452004D1B100400613 /* SwiftyDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		043833F0235610E900E947B5 /* UIFont+Traits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Traits.swift"; sourceTree = "<group>"; };
+		0485C6FC23C0BD7C0054D123 /* CoreDataContextObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataContextObserver.swift; sourceTree = "<group>"; };
 		1D1F7FC52024872F006B87D8 /* SwiftyDataSourceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyDataSourceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1F7FC72024872F006B87D8 /* SwiftyDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyDataSourceTests.swift; sourceTree = "<group>"; };
 		1D1F7FC92024872F006B87D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				B8F4AC172267869100F85471 /* Sequence+UniqueElements.swift */,
 				B8F4AC182267869100F85471 /* UserDefaults+Subscript.swift */,
 				B8F4AC192267869100F85471 /* Collection+SafeSubscript.swift */,
+				0485C6FC23C0BD7C0054D123 /* CoreDataContextObserver.swift */,
 			);
 			path = FoundationExtensions;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				B8F4AC272267869100F85471 /* UIView+Corners.swift in Sources */,
 				B8F4AC1E2267869100F85471 /* UIButton+Background.swift in Sources */,
 				B8F4AC282267869100F85471 /* UIViewController+Childs.swift in Sources */,
+				0485C6FD23C0BD7C0054D123 /* CoreDataContextObserver.swift in Sources */,
 				B8F4AC232267869100F85471 /* UIWindow+RootViewConttroller.swift in Sources */,
 				B8F4AC2B2267869100F85471 /* Sequence+UniqueElements.swift in Sources */,
 				B84F3CA121CAFE1600489349 /* AnyDataSource.swift in Sources */,
