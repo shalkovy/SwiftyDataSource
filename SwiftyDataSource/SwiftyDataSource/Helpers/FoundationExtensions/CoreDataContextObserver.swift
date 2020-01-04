@@ -20,7 +20,6 @@ public struct CoreDataContextObserverState: OptionSet {
     public static let all: CoreDataContextObserverState  = [inserted, updated, deleted, refreshed]
 }
 
-public typealias CoreDataContextObserverCompletionBlock = (NSManagedObject, CoreDataContextObserverState) -> ()
 public typealias CoreDataContextObserverContextChangeBlock = (_ notification: NSNotification, _ changedObjects: [CoreDataObserverObjectChange]) -> ()
 
 public enum CoreDataObserverObjectChange {
@@ -39,19 +38,20 @@ public enum CoreDataObserverObjectChange {
     }
 }
 
-public struct CoreDataObserverAction {
-    var state: CoreDataContextObserverState
-    var completionBlock: CoreDataContextObserverCompletionBlock
-}
+public class CoreDataContextObserver<T> where T: NSManagedObject {
+    
+    private struct CoreDataObserverAction<T> {
+        var state: CoreDataContextObserverState
+        var completionBlock: ObserverCallbackType<T>
+    }
 
-public class CoreDataContextObserver {
     public var enabled: Bool = true
     public var contextChangeBlock: CoreDataContextObserverContextChangeBlock?
     
-    private var notificationObserver: NSObjectProtocol?
     private(set) var context: NSManagedObjectContext
-    private(set) var actionsForManagedObjectID: Dictionary<NSManagedObjectID,[CoreDataObserverAction]> = [:]
     private(set) weak var persistentStoreCoordinator: NSPersistentStoreCoordinator?
+    private var notificationObserver: NSObjectProtocol?
+    private var actionsForManagedObjectID: Dictionary<NSManagedObjectID,[CoreDataObserverAction<T>]> = [:]
     
     deinit {
         unobserveAllObjects()
@@ -94,7 +94,7 @@ public class CoreDataContextObserver {
         let filteredObjects = combinedSet.filter({ allObjectIDs.contains($0.objectID) })
         
         for object in filteredObjects {
-            guard let actionsForObject = actionsForManagedObjectID[object.objectID] else { continue }
+            guard let actionsForObject = actionsForManagedObjectID[object.objectID], let object = object as? T else { continue }
 
             for action in actionsForObject {
                 if action.state.contains(.inserted) && insertedObjectsSet.contains(object) {
@@ -110,7 +110,9 @@ public class CoreDataContextObserver {
         }
     }
     
-    public func observe(object: NSManagedObject, for state: CoreDataContextObserverState = .all, completion: @escaping CoreDataContextObserverCompletionBlock) {
+    public typealias ObserverCallbackType<T> = (T, CoreDataContextObserverState) -> ()
+
+    public func observe(object: T, for state: CoreDataContextObserverState = .all, completion: @escaping ObserverCallbackType<T>) {
         let action = CoreDataObserverAction(state: state, completionBlock: completion)
         if var actionArray = actionsForManagedObjectID[object.objectID] {
             actionArray.append(action)
@@ -121,7 +123,7 @@ public class CoreDataContextObserver {
         
     }
     
-    public func unobserve(object: NSManagedObject, for state: CoreDataContextObserverState = .all) {
+    public func unobserve(object: T, for state: CoreDataContextObserverState = .all) {
         if state == .all {
             actionsForManagedObjectID.removeValue(forKey: object.objectID)
         } else if let actionsForObject = actionsForManagedObjectID[object.objectID] {
