@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FileManager {
+public extension FileManager {
     func fileUrlInCachesDirectory(for response: HTTPURLResponse) -> URL {
         let cachesDirectoryURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         return cachesDirectoryURL.appendingPathComponent(response.suggestedFilename!)
