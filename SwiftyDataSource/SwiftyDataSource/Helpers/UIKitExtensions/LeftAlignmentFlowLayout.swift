@@ -1,5 +1,5 @@
 //
-//  FlowLayout.swift
+//  LeftAlignmentFlowLayout.swift
 //  SwiftyDataSource
 //
 //  Created by Dima Shelkov on 1/16/20.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class FlowLayout: UICollectionViewFlowLayout {
+public class LeftAlignmentFlowLayout: UICollectionViewFlowLayout {
     
-    required init(minimumInteritemSpacing: CGFloat = 0, minimumLineSpacing: CGFloat = 0, sectionInset: UIEdgeInsets = .zero) {
+    public required init(minimumInteritemSpacing: CGFloat = 0, minimumLineSpacing: CGFloat = 0, sectionInset: UIEdgeInsets = .zero) {
         super.init()
         
         estimatedItemSize = UICollectionViewFlowLayout.automaticSize
@@ -20,11 +20,11 @@ class FlowLayout: UICollectionViewFlowLayout {
         sectionInsetReference = .fromSafeArea
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let layoutAttributes = super.layoutAttributesForElements(in: rect)!.map { $0.copy() as! UICollectionViewLayoutAttributes }
         guard scrollDirection == .vertical else { return layoutAttributes }
         
