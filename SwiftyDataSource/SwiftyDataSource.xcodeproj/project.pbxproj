@@ -50,6 +50,7 @@
 		B8F4AC2F2267869100F85471 /* InstantiatableFromStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4AC1C2267869100F85471 /* InstantiatableFromStoryboard.swift */; };
 		BCFA3BA823A8186700BA19BC /* CollectionViewDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA3BA723A8186700BA19BC /* CollectionViewDataSourceDelegate.swift */; };
 		BCFA3BAA23A82B6300BA19BC /* NoDataView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA3BA923A82B6300BA19BC /* NoDataView+Text.swift */; };
+		D1EE606F23D063A1008540C3 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE606E23D063A1008540C3 /* FlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		B8F4AC1C2267869100F85471 /* InstantiatableFromStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstantiatableFromStoryboard.swift; sourceTree = "<group>"; };
 		BCFA3BA723A8186700BA19BC /* CollectionViewDataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSourceDelegate.swift; sourceTree = "<group>"; };
 		BCFA3BA923A82B6300BA19BC /* NoDataView+Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NoDataView+Text.swift"; sourceTree = "<group>"; };
+		D1EE606E23D063A1008540C3 /* FlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 				B8F4AC0F2267869100F85471 /* UITableViewCell+Types.swift */,
 				B8F4AC102267869100F85471 /* UIControl+EnabledMarkedly.swift */,
 				B8F4AC112267869100F85471 /* UIStackView+RemoveAllSubviews.swift */,
+				D1EE606E23D063A1008540C3 /* FlowLayout.swift */,
 				B8F4AC122267869100F85471 /* UIView+Corners.swift */,
 				B8F4AC132267869100F85471 /* UIViewController+Childs.swift */,
 				B8F4AC142267869100F85471 /* UITableView+ReuseIdentifiers.swift */,
@@ -404,6 +407,7 @@
 				B8F4AC1D2267869100F85471 /* UITableViewCell+Position.swift in Sources */,
 				B8BEC0662315864C0028439E /* FilterableDataSourceContainer.swift in Sources */,
 				B8F4AC242267869100F85471 /* UITableViewCell+Types.swift in Sources */,
+				D1EE606F23D063A1008540C3 /* FlowLayout.swift in Sources */,
 				BCFA3BAA23A82B6300BA19BC /* NoDataView+Text.swift in Sources */,
 				B8F4AC262267869100F85471 /* UIStackView+RemoveAllSubviews.swift in Sources */,
 				B8F4AC2A2267869100F85471 /* NSFetchRequest+Sorting.swift in Sources */,
