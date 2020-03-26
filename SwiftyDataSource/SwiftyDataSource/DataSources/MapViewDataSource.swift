@@ -66,7 +66,14 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         
         mapView.addSubview(noDataView)
         noDataView.isHidden = hidden
-        noDataView.bounds = mapView.frame
+        if let superview = noDataView.superview {
+            noDataView.centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
+            noDataView.centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = true
+            noDataView.leftAnchor.constraint(equalTo: superview.leftAnchor).isActive = true
+            noDataView.rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
+            noDataView.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
+            noDataView.bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
+        }
     }
     
     public func invertExpanding(at indexPath: IndexPath) {
@@ -119,8 +126,4 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         guard let annotation = view.annotation as? ObjectType else { return }
         delegate?.dataSource(self, didSelect: annotation)
     }
-    
-//    public func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-//
-//    }
 }
