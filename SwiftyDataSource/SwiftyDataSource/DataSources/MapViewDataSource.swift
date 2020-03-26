@@ -59,13 +59,6 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         }
     }
     
-    public var hasData: Bool {
-        if let annotations = mapView?.annotations {
-            return annotations.count > 0
-        }
-        return false
-    }
-    
     open func setNoDataView(hidden: Bool) {
         guard let noDataView = noDataView, let mapView = mapView else {
             return
