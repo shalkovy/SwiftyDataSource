@@ -11,7 +11,7 @@ import MapKit
 
 open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegate, DataSourceContainerDelegate where ObjectType: MKAnnotation {
     
-    // MARK: Initializer
+    // MARK: - Initializer
     
     public init(mapView: MKMapView? = nil,
                 annotationViewClass: AnyClass? = nil,
@@ -24,7 +24,7 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         super.init()
     }
     
-    // MARK: Public properties
+    // MARK: - Public properties
 
     public var mapView: MKMapView? {
         didSet {
@@ -44,7 +44,7 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         mapView?.addAnnotations(objects)
     }
 
-    // MARK: DataSource implementation
+    // MARK: - DataSource implementation
     
     public var container: DataSourceContainer<ObjectType>? {
         didSet {
@@ -53,17 +53,27 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         }
     }
     
-    public var noDataView: UIView?
+    public var noDataView: UIView? {
+        didSet {
+            showNoDataViewIfNeeded()
+        }
+    }
     
     open func setNoDataView(hidden: Bool) {
-        fatalError()
+        guard let noDataView = noDataView, let mapView = mapView else {
+            return
+        }
+        
+        mapView.addSubview(noDataView)
+        noDataView.isHidden = hidden
+        noDataView.bounds = mapView.frame
     }
     
     public func invertExpanding(at indexPath: IndexPath) {
         fatalError()
     }
     
-    // MARK: Private
+    // MARK: - Private
     
     private func reloadAnnotations() {
         guard mapView != nil,
@@ -78,34 +88,39 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
         }
     }
     
-    // MARK: Container delegate
-    
+    // MARK: - Container delegate
     
     open func containerWillChangeContent(_ container: DataSourceContainerProtocol) {
-        
+        if let mapView = mapView {
+            mapView.removeAnnotations(mapView.annotations)
+        }
+        reloadAnnotations()
     }
     
     open func container(_ container: DataSourceContainerProtocol, didChange anObject: Any, at indexPath: IndexPath?, for type: DataSourceObjectChangeType, newIndexPath: IndexPath?) {
-        
+        fatalError("You can't use this delegate method with MapViewDataSource")
     }
     
     open func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
-        
+        fatalError("You can't use this delegate method with MapViewDataSource")
     }
     
     open func container(_ container: DataSourceContainerProtocol, sectionIndexTitleForSectionName sectionName: String) -> String? {
-        return nil
+        fatalError("You can't use this delegate method with MapViewDataSource")
     }
     
     open func containerDidChangeContent(_ container: DataSourceContainerProtocol) {
-        
+        showNoDataViewIfNeeded()
     }
     
-    // MARK: MKMapViewDelegate
+    // MARK: - MKMapViewDelegate
     
     public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ObjectType else { return }
         delegate?.dataSource(self, didSelect: annotation)
     }
-
+    
+//    public func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+//
+//    }
 }
