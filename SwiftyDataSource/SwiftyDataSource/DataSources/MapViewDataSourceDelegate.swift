@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
 // MARK: DataSource for customizing default behaviour of dataSource
 
 public protocol MapViewDataSourceDelegate: class {
     associatedtype ObjectType
     func dataSource(_ dataSource: DataSourceProtocol, didSelect object: ObjectType)
+    var mapView: MKMapView! { get }
 }
 
 // MARK: Default implementation as all of methods are optional
@@ -25,6 +27,8 @@ public extension MapViewDataSourceDelegate {
 // MARK: Type erasure for protocol with associated type. So we can use protocol for initializing
 
 public class AnyMapViewDataSourceDelegate<T>: MapViewDataSourceDelegate {
+    public var mapView: MKMapView!
+    
     public required init<U: MapViewDataSourceDelegate>(_ delegate: U) where U.ObjectType == T {
         _dataSourceDidSelectObject = delegate.dataSource
     }

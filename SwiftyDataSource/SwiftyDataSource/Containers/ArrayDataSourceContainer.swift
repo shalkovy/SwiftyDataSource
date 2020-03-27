@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 enum ArrayDataSourceContainerError: Error {
     case NonValidIndexPathInsertion
@@ -141,6 +142,13 @@ public class ArrayDataSourceContainer<ResultType>: DataSourceContainer<ResultTyp
         delegate?.containerWillChangeContent(self)
         delegate?.container(self, didChange: section, atSectionIndex: sectionIndex, for: .insert)
         delegate?.containerDidChangeContent(self)
+    }
+    
+    public func add<T: MapViewDataSourceDelegate>(annotations: [ResultType], on mapViewDelegate: T) {
+//        guard ResultType.self is MKAnnotation.Type else { return }
+        guard let annotations = annotations as? [MKAnnotation] else { return }
+        
+        mapViewDelegate.mapView.addAnnotations(annotations)
     }
     
     public func removeAll() {
