@@ -1,0 +1,24 @@
+{
+  "name": "SwiftyDataSource",
+  "version": "1.0",
+  "summary": "A lot of helpers",
+  "homepage": "https://github.com/abakhtin/SwiftyDataSource",
+  "license": "MIT",
+  "authors": {
+    "launchOptions": "ai.bakhtin@gmail.com"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source": {
+    "git": "https://github.com/abakhtin/SwiftyDataSource"
+  },
+  "source_files": [
+    "SwiftyDataSource/SwiftyDataSource/Containers/*",
+    "SwiftyDataSource/SwiftyDataSource/DataSources/*",
+    "SwiftyDataSource/SwiftyDataSource/Helpers/FoundationExtensions/*",
+    "SwiftyDataSource/SwiftyDataSource/Helpers/UIKitExtensions/*",
+    "SwiftyDataSource/SwiftyDataSource/Helpers/ViewControllersHelpers/*"
+  ],
+  "requires_arc": true
+}
