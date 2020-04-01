@@ -1,0 +1,2 @@
+binary "GoogleMaps.json" "3.6.0"
+github "shalkovy/SwiftyDataSource" "1.0.58"

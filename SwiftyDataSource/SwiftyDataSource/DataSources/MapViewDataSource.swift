@@ -125,11 +125,22 @@ open class MapViewDataSource<ObjectType>: NSObject, DataSource, MKMapViewDelegat
     }
     
     open func container(_ container: DataSourceContainerProtocol, didChange sectionInfo: DataSourceSectionInfo, atSectionIndex sectionIndex: Int, for type: DataSourceObjectChangeType) {
-        fatalError("You can't use this delegate method with MapViewDataSource")
+        switch type {
+        case .insert:
+            if let annotations = sectionInfo.objects as? [MKAnnotation] {
+                mapView?.addAnnotations(annotations)
+            }
+        case .delete:
+            if let annotations = sectionInfo.objects as? [MKAnnotation] {
+                mapView?.removeAnnotations(annotations)
+            }
+        case .move, .update, .reload, .reloadAll:
+            reloadAnnotations()
+        }
     }
     
     open func container(_ container: DataSourceContainerProtocol, sectionIndexTitleForSectionName sectionName: String) -> String? {
-        fatalError("You can't use this delegate method with MapViewDataSource")
+        return nil
     }
     
     open func containerDidChangeContent(_ container: DataSourceContainerProtocol) {

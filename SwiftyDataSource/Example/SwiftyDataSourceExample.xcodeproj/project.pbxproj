@@ -17,7 +17,23 @@
 		D11A178F242CCBEA00DD3270 /* NoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A178E242CCBEA00DD3270 /* NoDataView.swift */; };
 		D12FE0FC242CEACB0053722A /* GoogleMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12FE0FB242CEACB0053722A /* GoogleMapsViewController.swift */; };
 		D13624C7242DE02000B968AA /* TestMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13624C6242DE02000B968AA /* TestMark.swift */; };
+		D1C3EFFA243496FC00109AE5 /* SwiftyDataSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1C3EFF62434964400109AE5 /* SwiftyDataSource.framework */; };
+		D1C3EFFB243496FC00109AE5 /* SwiftyDataSource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1C3EFF62434964400109AE5 /* SwiftyDataSource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D1C3EFFC243496FC00109AE5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D1C3EFFB243496FC00109AE5 /* SwiftyDataSource.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D11A1775242C83EE00DD3270 /* SwiftyDataSourceExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyDataSourceExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,6 +48,8 @@
 		D11A178E242CCBEA00DD3270 /* NoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataView.swift; sourceTree = "<group>"; };
 		D12FE0FB242CEACB0053722A /* GoogleMapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsViewController.swift; sourceTree = "<group>"; };
 		D13624C6242DE02000B968AA /* TestMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMark.swift; sourceTree = "<group>"; };
+		D1C3EFF524348DA500109AE5 /* SwiftyDataSource.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftyDataSource.framework.dSYM; path = Carthage/Build/iOS/SwiftyDataSource.framework.dSYM; sourceTree = "<group>"; };
+		D1C3EFF62434964400109AE5 /* SwiftyDataSource.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyDataSource.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1C3EFFA243496FC00109AE5 /* SwiftyDataSource.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +70,7 @@
 				D11A1777242C83EE00DD3270 /* SwiftyDataSourceExample */,
 				D11A1776242C83EE00DD3270 /* Products */,
 				FF890189E55E085EFBD88A03 /* Pods */,
+				D1C3EFF424348DA500109AE5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +140,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		D1C3EFF424348DA500109AE5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1C3EFF62434964400109AE5 /* SwiftyDataSource.framework */,
+				D1C3EFF524348DA500109AE5 /* SwiftyDataSource.framework.dSYM */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FF890189E55E085EFBD88A03 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +166,7 @@
 				D11A1771242C83EE00DD3270 /* Sources */,
 				D11A1772242C83EE00DD3270 /* Frameworks */,
 				D11A1773242C83EE00DD3270 /* Resources */,
+				D1C3EFFC243496FC00109AE5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
