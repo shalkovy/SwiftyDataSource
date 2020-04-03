@@ -21,8 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		D1E2560A2437C97D00481EE4 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E256092437C97D00481EE4 /* Package.swift */; };
 		OBJ_24 /* SwiftyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* SwiftyDataSource.swift */; };
-		OBJ_31 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_42 /* SwiftyDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* SwiftyDataSourceTests.swift */; };
 		OBJ_44 /* SwiftyDataSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SwiftyDataSource::SwiftyDataSource::Product" /* SwiftyDataSource.framework */; };
 /* End PBXBuildFile section */
@@ -45,10 +45,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D1E256092437C97D00481EE4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		OBJ_13 /* SwiftyDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyDataSourceTests.swift; sourceTree = "<group>"; };
 		OBJ_18 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* SwiftyDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyDataSource.swift; sourceTree = "<group>"; };
 		"SwiftyDataSource::SwiftyDataSource::Product" /* SwiftyDataSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyDataSource.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"SwiftyDataSource::SwiftyDataSourceTests::Product" /* SwiftyDataSourceTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = SwiftyDataSourceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,16 +100,15 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				OBJ_6 /* Package.swift */,
+				OBJ_18 /* README.md */,
+				D1E256092437C97D00481EE4 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_10 /* Tests */,
 				OBJ_14 /* Products */,
-				OBJ_18 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -195,7 +194,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_14 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -221,7 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_31 /* Package.swift in Sources */,
+				D1E2560A2437C97D00481EE4 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
