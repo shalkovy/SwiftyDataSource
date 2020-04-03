@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SwiftyDataSource/SwiftyDataSource.xcodeproj">
+      location = "group:SwiftyDataSource.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:SwiftyDataSource/Example/SwiftyDataSourceExample.xcodeproj">
+      location = "group:Example/SwiftyDataSourceExample.xcodeproj">
    </FileRef>
 </Workspace>

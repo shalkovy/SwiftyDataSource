@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		D1E2560A2437C97D00481EE4 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E256092437C97D00481EE4 /* Package.swift */; };
 		D1E256402437CC2C00481EE4 /* AnyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E256102437CC2C00481EE4 /* AnyDataSource.swift */; };
 		D1E256412437CC2C00481EE4 /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E256112437CC2C00481EE4 /* CollectionViewDataSource.swift */; };
 		D1E256422437CC2C00481EE4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E256122437CC2C00481EE4 /* TableViewDataSource.swift */; };
@@ -63,6 +62,7 @@
 		D1E256662437CC2C00481EE4 /* UITableView+ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2563C2437CC2C00481EE4 /* UITableView+ReuseIdentifiers.swift */; };
 		D1E256672437CC2C00481EE4 /* LeftAlignmentFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2563D2437CC2C00481EE4 /* LeftAlignmentFlowLayout.swift */; };
 		D1E256682437CC2C00481EE4 /* UIFont+Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2563E2437CC2C00481EE4 /* UIFont+Traits.swift */; };
+		D1E2566B2437CDE900481EE4 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E256692437CDBD00481EE4 /* Package.swift */; };
 		OBJ_42 /* SwiftyDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* SwiftyDataSourceTests.swift */; };
 		OBJ_44 /* SwiftyDataSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SwiftyDataSource::SwiftyDataSource::Product" /* SwiftyDataSource.framework */; };
 /* End PBXBuildFile section */
@@ -85,7 +85,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D1E256092437C97D00481EE4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		D1E256102437CC2C00481EE4 /* AnyDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDataSource.swift; sourceTree = "<group>"; };
 		D1E256112437CC2C00481EE4 /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
 		D1E256122437CC2C00481EE4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -129,6 +128,7 @@
 		D1E2563D2437CC2C00481EE4 /* LeftAlignmentFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignmentFlowLayout.swift; sourceTree = "<group>"; };
 		D1E2563E2437CC2C00481EE4 /* UIFont+Traits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Traits.swift"; sourceTree = "<group>"; };
 		D1E2563F2437CC2C00481EE4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1E256692437CDBD00481EE4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		OBJ_13 /* SwiftyDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyDataSourceTests.swift; sourceTree = "<group>"; };
 		OBJ_18 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_18 /* README.md */,
-				D1E256092437C97D00481EE4 /* Package.swift */,
+				D1E256692437CDBD00481EE4 /* Package.swift */,
 				D1E2560D2437CC2C00481EE4 /* Sources */,
 				OBJ_10 /* Tests */,
 				OBJ_14 /* Products */,
@@ -431,7 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				D1E2560A2437C97D00481EE4 /* Package.swift in Sources */,
+				D1E2566B2437CDE900481EE4 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
