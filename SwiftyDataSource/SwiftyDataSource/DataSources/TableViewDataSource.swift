@@ -293,6 +293,13 @@ open class TableViewDataSource<ObjectType>: NSObject, DataSource, UITableViewDat
     open func tableView(_ tableView: UITableView, shouldSpringLoadRowAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
         return true
     }
+    
+    // Scroll view methods
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= scrollView.contentSize.height {
+            delegate?.dataSourceDidScrollToLastElement(self)
+        }
+    }
 }
 
 extension TableViewDataSource: DataSourceContainerDelegate {

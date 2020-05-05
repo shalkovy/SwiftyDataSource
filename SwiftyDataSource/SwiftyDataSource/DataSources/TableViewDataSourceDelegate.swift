@@ -16,6 +16,7 @@ public protocol TableViewDataSourceDelegate: class {
     func dataSource(_ dataSource: DataSourceProtocol, accessoryTypeFor object: ObjectType, at indexPath: IndexPath) -> UITableViewCell.AccessoryType?
     func dataSource(_ dataSource: DataSourceProtocol, didSelect object: ObjectType, at indexPath: IndexPath)
     func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: ObjectType, at indexPath: IndexPath?)
+    func dataSourceDidScrollToLastElement(_ dataSource: DataSourceProtocol)
 }
 
 // MARK: Default implementation as all of methods are optional
@@ -31,6 +32,7 @@ public extension TableViewDataSourceDelegate {
     
     func dataSource(_ dataSource: DataSourceProtocol, didSelect object: ObjectType, at indexPath: IndexPath) { }
     func dataSource(_ dataSource: DataSourceProtocol, didDeselect object: ObjectType, at indexPath: IndexPath?) { }
+    func dataSourceDidScrollToLastElement(_ dataSource: DataSourceProtocol) { }
 }
 
 
@@ -42,12 +44,18 @@ public class AnyTableViewDataSourceDelegate<T>: TableViewDataSourceDelegate {
         _dataSourceAccessoryTypeForObjectAtIndexPath = { [weak delegate] in delegate?.dataSource($0, accessoryTypeFor: $1, at: $2) }
         _dataSourceDidSelectObjectAtIndexPath = { [weak delegate] in delegate?.dataSource($0, didSelect: $1, at: $2) }
         _dataSourceDidDeselectObjectAtIndexPath = { [weak delegate] in delegate?.dataSource($0, didDeselect: $1, at: $2) }
+        _dataSourceDidScrollToLastElement = { [weak delegate] in delegate?.dataSourceDidScrollToLastElement($0)}
     }
 
     private let _dataSourceCellIdentifierForObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> String?
     private let _dataSourceAccessoryTypeForObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> UITableViewCell.AccessoryType?
     private let _dataSourceDidSelectObjectAtIndexPath: (DataSourceProtocol, T, IndexPath) -> Void
     private let _dataSourceDidDeselectObjectAtIndexPath: (DataSourceProtocol, T, IndexPath?) -> Void
+    private let _dataSourceDidScrollToLastElement: (DataSourceProtocol) -> Void
+    
+    public func dataSourceDidScrollToLastElement(_ dataSource: DataSourceProtocol) {
+        return _dataSourceDidScrollToLastElement(dataSource)
+    }
 
     public func dataSource(_ dataSource: DataSourceProtocol, cellIdentifierFor object: T, at indexPath: IndexPath) -> String? {
         return _dataSourceCellIdentifierForObjectAtIndexPath(dataSource, object, indexPath)
